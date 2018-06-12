@@ -1,5 +1,6 @@
 package com.springbootredis.server;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,11 @@ public class IndexServer {
 		list.add("bb");
 		System.out.println("-------执行了-------");
 		return list;
+	}
+
+	@CacheEvict(value = "user")
+	public List<String> remove(){
+		return null;
 	}
 
 }
