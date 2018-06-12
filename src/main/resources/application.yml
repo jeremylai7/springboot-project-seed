@@ -1,0 +1,12 @@
+
+spring:
+  redis:
+    database: 0
+    host: 47.98.202.133
+    port: 6379
+    pool:
+      max-active: 8
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
+    timeout: 0
