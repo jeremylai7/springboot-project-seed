@@ -20,6 +20,7 @@ public class IndexServer {
 
 	@CacheEvict(value = "user")
 	public List<String> remove(){
+		System.out.println(12);
 		return null;
 	}
 
