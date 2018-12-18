@@ -1,7 +1,7 @@
 
 spring:
   redis:
-    database: 0
+    database: 1
     host: 47.98.202.133
     port: 6379
     pool:
@@ -10,3 +10,5 @@ spring:
       max-idle: 8
       min-idle: 0
     timeout: 0
+    password: 123451
+

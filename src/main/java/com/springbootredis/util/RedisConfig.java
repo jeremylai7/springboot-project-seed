@@ -38,8 +38,6 @@ public class RedisConfig extends CachingConfigurerSupport{
 	@Bean
 	public CacheManager cacheManager(RedisTemplate redisTemplate){
 		RedisCacheManager rcm = new RedisCacheManager(redisTemplate);
-		//设置过期时间
-		rcm.setDefaultExpiration(60*60*10);
 		return rcm;
 	}
 
@@ -54,8 +52,6 @@ public class RedisConfig extends CachingConfigurerSupport{
 		template.setValueSerializer(jackson2JsonRedisSerializer);
 		template.afterPropertiesSet();
 		return template;
-
-
 	}
 
 

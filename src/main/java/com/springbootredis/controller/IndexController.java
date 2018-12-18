@@ -18,8 +18,8 @@ public class IndexController {
 	private IndexServer indexServer;
 
 	@RequestMapping("/index")
-	public List<String> index(){
-		return  indexServer.index();
+	public List<String> index(String aa){
+		return  indexServer.index(aa);
 	}
 
 	@RequestMapping("get/index")
@@ -38,11 +38,9 @@ public class IndexController {
 		return  list;
 	}
 
-	@RequestMapping("manage/index")
-	public  List<String> mangeindex(){
-		List<String> list = new ArrayList<>();
-		list.add("mange");
-		return list;
+	@RequestMapping("/remove")
+	public void remove(String aa){
+		indexServer.remove(aa);
 	}
 
 
