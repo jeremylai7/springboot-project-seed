@@ -10,5 +10,5 @@ spring:
       max-idle: 8
       min-idle: 0
     timeout: 0
-    password: 123451
+    password: 
 
