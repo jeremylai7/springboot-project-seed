@@ -3,6 +3,7 @@ package com.springbootredis.controller;
 import com.springbootredis.server.IndexServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,6 +42,11 @@ public class IndexController {
 	@RequestMapping("/remove")
 	public void remove(String aa){
 		indexServer.remove(aa);
+	}
+
+	@GetMapping("/put")
+	public void put(String aa){
+		indexServer.cachePut(aa);
 	}
 
 

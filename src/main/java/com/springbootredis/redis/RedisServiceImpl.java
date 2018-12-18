@@ -3,6 +3,9 @@ package com.springbootredis.redis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -14,10 +17,25 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 public class RedisServiceImpl implements RedisService {
-
+    @Resource
+    private RedisTemplate<String,Object> redisTemplate;
 
     @Override
     public void put(String key,Object doamin,long expire) {
+        //设置编码
+        RedisSerializer serializer = new StringRedisSerializer();
+        redisTemplate.setKeySerializer(serializer);
+        ValueOperations<String,Object> ov = redisTemplate.opsForValue();
+        if (expire == -1){
+            ov.set(key,doamin);
+        }else {
+            ov.set(key,doamin,expire,TimeUnit.SECONDS);
+        }
+    }
 
+    @Override
+    public Object get(String key) {
+        ValueOperations<String,Object> ov = redisTemplate.opsForValue();
+        return ov.get(key);
     }
 }
