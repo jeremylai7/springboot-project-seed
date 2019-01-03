@@ -40,7 +40,7 @@ public class IndexServer {
 
     public static void main(String[] args) {
         JedisShardInfo jedisShardInfo = new JedisShardInfo("47.98.20.133",6379,10000);
-        jedisShardInfo.setPassword("123451");
+        jedisShardInfo.setPassword("");
         Jedis jedis = new Jedis(jedisShardInfo);
         jedis.connect();
         jedis.set("name","jeremy");
