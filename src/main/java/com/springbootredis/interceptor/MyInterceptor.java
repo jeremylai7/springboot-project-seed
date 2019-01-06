@@ -24,9 +24,12 @@ public class MyInterceptor implements HandlerInterceptor{
 		Method method = handlerMethod.getMethod();
 		System.out.println(method);
 		boolean isLogin = this.isLogin(method);
-		if (!isLogin){
+		/*if (!isLogin){
 			return true;
-		}
+		}*/
+		String token =  httpServletRequest.getHeader("Authorization");
+		System.out.println(token);
+
 		if (httpServletRequest.getServletPath().startsWith("/manage")){
 			httpServletResponse.sendRedirect("/login");
 			return false;

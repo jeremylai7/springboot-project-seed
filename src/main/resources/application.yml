@@ -1,4 +1,3 @@
-
 spring:
   redis:
     database: 1
@@ -11,6 +10,11 @@ spring:
       min-idle: 0
     timeout: 0
     password: 123451
+  datasource:
+    url: jdbc:mysql://47.98.202.133:3306/blog
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
 
 
   
