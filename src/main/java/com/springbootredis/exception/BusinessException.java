@@ -1,5 +1,7 @@
 package com.springbootredis.exception;
 
+import java.text.MessageFormat;
+
 /**
  * @Author: laizc
  * @Date: Created in 11:01 2019-01-07
@@ -9,7 +11,7 @@ public class BusinessException extends Exception {
 
     private String[] args;
 
-    BusinessException(String code,String...args){
+    public BusinessException(String code, String... args){
         this.code = code;
         this.args = args;
     }
@@ -20,5 +22,14 @@ public class BusinessException extends Exception {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    @Override
+    public String getMessage(){
+        String message = ResponseCodes.getCodeMessage(code);
+        if (args == null){
+            return message;
+        }
+        return MessageFormat.format(message,args);
     }
 }

@@ -30,12 +30,11 @@ public class MyInterceptor implements HandlerInterceptor{
 		if (!(handlerMethod instanceof HandlerMethod)) {
 			return true;
 		}
-		//Method method = handlerMethod.getMethod();
-		//System.out.println(method);
-		/*boolean isLogin = this.isLogin(method);
+		Method method = handlerMethod.getMethod();
+		boolean isLogin = this.isLogin(method);
 		if (!isLogin){
 			return true;
-		}*/
+		}
 		String authorization =  request.getHeader("Authorization");
 		String ip = NetUtil.getIpAddress(request);
 		response.setHeader("Content-Type", "application/json;charset=UTF-8");

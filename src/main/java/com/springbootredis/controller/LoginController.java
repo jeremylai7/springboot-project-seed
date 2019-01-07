@@ -1,11 +1,15 @@
 package com.springbootredis.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.springbootredis.exception.BusinessException;
+import com.springbootredis.exception.ResponseCodes;
+import com.springbootredis.model.Result;
 import com.springbootredis.model.User;
 import com.springbootredis.redis.RedisService;
 import com.springbootredis.server.UserService;
 import com.springbootredis.util.JwtUtil;
 import com.springbootredis.util.NetUtil;
+import com.springbootredis.util.OutUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -65,12 +69,19 @@ public class LoginController {
      * @return
      */
     @PostMapping("/add")
-    public String add(String username,String password){
+    public Result add(String username,String password) throws BusinessException {
+        User checkuser = new User();
+        checkuser.setUsername(username);
+        User user1 = userService.findById(checkuser);
+        if (user1 != null){
+            throw new BusinessException(ResponseCodes.USERNAME_EXISTING);//用户名不能重复
+        }
+
         User user = new User();
         user.setUsername(username);
         user.setPassword(password);
         userService.add(user);
-        return null;
+        return OutUtil.success("添加成功");
     }
 
     /**
@@ -78,8 +89,8 @@ public class LoginController {
      * @return
      */
     @GetMapping("/list")
-    public String list(){
+    public Result list(){
        List<User> list = userService.find();
-       return list.toString();
+       return OutUtil.success(list);
     }
 }
