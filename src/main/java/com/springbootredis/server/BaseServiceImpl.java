@@ -1,7 +1,6 @@
 package com.springbootredis.server;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
-import com.springbootredis.dao.MyMapper;
+import com.springbootredis.util.MyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;

@@ -9,12 +9,13 @@ spring:
       max-idle: 8
       min-idle: 0
     timeout: 0
-    password: 123451
+    password:
   datasource:
-    url: jdbc:mysql://47.98.202.133:3306/blog
+    url: jdbc:mysql://47.98.202.133:3306/blog?useSSL=false&characterEncoding=UTF-8
     username: root
-    password: 123456
+    password:
     driver-class-name: com.mysql.jdbc.Driver
+
 
 
   
