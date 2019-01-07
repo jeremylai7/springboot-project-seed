@@ -3,6 +3,8 @@ package com.springbootredis.interceptor;
 
 import com.alibaba.fastjson.JSONObject;
 import com.springbootredis.annotation.Logined;
+import com.springbootredis.exception.BusinessException;
+import com.springbootredis.exception.ResponseCodes;
 import com.springbootredis.model.User;
 import com.springbootredis.redis.RedisService;
 import com.springbootredis.util.JwtUtil;
@@ -44,10 +46,10 @@ public class MyInterceptor implements HandlerInterceptor{
 		User user = JSONObject.parseObject(params.get("user").toString(),User.class);
 		Integer userId = Integer.valueOf(redisService.get(authorization).toString());
 		if (redisService.get(authorization) == null){
-			throw new Exception("token 过期");
+			throw new BusinessException(ResponseCodes.TOKENOVERDUE);
 		}
 		if (!userId.equals(user.getId())){
-			throw new Exception("token 过期");
+			throw new BusinessException(ResponseCodes.TOKENOVERDUE);
 		}
 		redisService.put(authorization,userId,60*60);
 

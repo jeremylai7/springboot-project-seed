@@ -1,5 +1,7 @@
 package com.springbootredis.util;
 
+import com.springbootredis.exception.BusinessException;
+import com.springbootredis.exception.ResponseCodes;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.apache.commons.lang3.StringUtils;
@@ -34,9 +36,9 @@ public class JwtUtil {
         return jwt;
     }
 
-    public static Map<String,Object> validate(String token,String ip) throws Exception {
+    public static Map<String,Object> validate(String token,String ip) throws BusinessException {
         if (StringUtils.isBlank(token)){
-            throw new Exception("token null");
+            throw new BusinessException(ResponseCodes.TOKENNULL);
         }
         //token解析
         Map<String,Object> body = Jwts.parser()
@@ -48,7 +50,7 @@ public class JwtUtil {
         HashMap<String,Object> params = (HashMap<String, Object>) body.get("keyMap");
         String tokenIp = params.get("ip").toString();
         if (StringUtils.isBlank(tokenIp) || !ip.equals(tokenIp)){
-            throw new Exception("token 解析错误");
+            throw new BusinessException(ResponseCodes.TOKENOVERDUE);
         }
         return params;
     }
