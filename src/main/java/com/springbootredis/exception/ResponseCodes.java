@@ -17,6 +17,8 @@ public class ResponseCodes {
 
     public static final String USERNAME_EXISTING = "-2";//用户名已存在
 
+    public static final String PASSWORD_ERROR = "-3"; //密码错误
+
     public static final String TOKEN_FAILURE = "-401";// 未知的token错误
 
     public static final String TOKENERROR = "-402";//token解析错误

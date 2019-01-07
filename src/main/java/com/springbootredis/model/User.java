@@ -18,11 +18,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)//自增
     private Integer id;
 
+    private String roleId;
+
     private String username;
 
     private String password;
 
     private Integer age;
+    //是否是超级管理员
+    private Boolean top;
 
 
 }

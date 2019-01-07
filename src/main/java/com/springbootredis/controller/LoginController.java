@@ -25,7 +25,7 @@ import java.util.Map;
 /**
  * @Auther: laizc
  * @Date: 2019/1/6 14:48
- * @Description: 登陆
+ * @Description:
  */
 @RestController
 @RequestMapping("/user")
@@ -49,7 +49,7 @@ public class LoginController {
         user.setPassword(password);
         User list = userService.findById(user);
         if (list == null){
-            throw new Exception("密码错误");
+            throw new BusinessException(ResponseCodes.PASSWORD_ERROR);//密码错误
         }
         //传入token参数
         Map<String,Object> map = new HashMap<>();
