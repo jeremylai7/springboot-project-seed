@@ -5,16 +5,20 @@ import com.springbootredis.exception.BusinessException;
 import com.springbootredis.exception.ResponseCodes;
 import com.springbootredis.model.Result;
 import com.springbootredis.model.User;
+import com.springbootredis.model.enums.UserType;
 import com.springbootredis.redis.RedisService;
+import com.springbootredis.server.User2Service;
 import com.springbootredis.server.UserService;
 import com.springbootredis.util.JwtUtil;
 import com.springbootredis.util.NetUtil;
 import com.springbootredis.util.OutUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,8 +31,10 @@ import java.util.Map;
  * @Date: 2019/1/6 14:48
  * @Description:
  */
+@Api(value = "用户api",description = "用户api desc")
 @RestController
 @RequestMapping("/user")
+@CrossOrigin
 public class LoginController {
     @Autowired
     private UserService userService;
@@ -36,17 +42,12 @@ public class LoginController {
     @Autowired
     private RedisService redisService;
 
-    /**
-     * 登陆
-     * @param username
-     * @param password
-     * @return
-     */
+    @Autowired
+    private User2Service user2Service;
+
+    @ApiOperation(value = "登陆")
     @PostMapping("/login")
-    public String login(HttpServletRequest request, HttpServletResponse response, String username, String password) throws Exception {
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(password);
+    public String login(@ApiIgnore HttpServletRequest request,@ApiIgnore HttpServletResponse response,User user) throws Exception {
         User list = userService.findById(user);
         if (list == null){
             throw new BusinessException(ResponseCodes.PASSWORD_ERROR);//密码错误
@@ -62,25 +63,14 @@ public class LoginController {
         return "success";
     }
 
-    /**
-     * 注册
-     * @param username
-     * @param password
-     * @return
-     */
+    @ApiOperation(value = "添加用户",response = User.class)
     @PostMapping("/add")
-    public Result add(String username,String password) throws BusinessException {
-        User checkuser = new User();
-        checkuser.setUsername(username);
-        User user1 = userService.findById(checkuser);
+    public Result add(@ApiIgnore HttpServletRequest request,User user) throws BusinessException {
+        User user1 = userService.findById(user);
         if (user1 != null){
             throw new BusinessException(ResponseCodes.USERNAME_EXISTING);//用户名不能重复
         }
-
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(password);
-        userService.add(user);
+        user2Service.add(user);
         return OutUtil.success("添加成功");
     }
 
@@ -88,9 +78,22 @@ public class LoginController {
      * 查询所有信息
      * @return
      */
+    @ApiOperation(value = "获取所有用户",response = User.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(value = "用户名",name = "username")
+    })
     @GetMapping("/list")
-    public Result list(){
+    public Result list(String username, @ApiIgnore HttpServletRequest request){
        List<User> list = userService.find();
        return OutUtil.success(list);
     }
+
+    @ApiOperation(value = "查询不同状态用户",response = User.class)
+    @GetMapping("/findByState")
+    public Result findByState(UserType userType){
+        List<User> list = user2Service.getUser(userType);
+        //List<User> list = userService.findAll(type);
+        return OutUtil.success(list);
+    }
+
 }

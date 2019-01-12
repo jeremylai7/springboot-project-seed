@@ -1,7 +1,10 @@
 package com.springbootredis.controller;
 
 import com.springbootredis.annotation.Logined;
+import com.springbootredis.model.User;
 import com.springbootredis.server.IndexServer;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,12 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+@Api("首页api")
 @Controller
 @RestController
 public class IndexController {
 	@Autowired
 	private IndexServer indexServer;
 
+	@ApiOperation(value = "添加",response = User.class)
 	@RequestMapping("/index")
 	public List<String> index(String aa){
 		return  indexServer.index(aa);

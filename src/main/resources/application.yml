@@ -15,6 +15,10 @@ spring:
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
+mybatis:
+  config-location: classpath:/mybatis/config.xml
+  mapper-locations: classpath:mapper/**/*.xml
+  checkConfigLocation: true
 
 
 

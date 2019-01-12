@@ -1,6 +1,7 @@
 package com.springbootredis.server;
 
 import com.springbootredis.model.User;
+import com.springbootredis.model.enums.UserType;
 
 import java.util.List;
 
@@ -10,6 +11,8 @@ import java.util.List;
  * @Description:
  */
 public interface UserService{
+    public List<User> findAll(UserType state);
+
     public List<User> find();
 
     public User findById(User user);
