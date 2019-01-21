@@ -2,8 +2,7 @@ package com.springbootredis.util;
 
 import com.springbootredis.exception.BusinessException;
 import com.springbootredis.exception.ResponseCodes;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
@@ -40,19 +39,31 @@ public class JwtUtil {
         if (StringUtils.isBlank(token)){
             throw new BusinessException(ResponseCodes.TOKENNULL);
         }
-        //token解析
-        Map<String,Object> body = Jwts.parser()
-                //传入密钥
-                .setSigningKey(SECRET)
-                .parseClaimsJws(token)
-                .getBody();
-        //验证无异常后刷新token过期时间
-        HashMap<String,Object> params = (HashMap<String, Object>) body.get("keyMap");
-        String tokenIp = params.get("ip").toString();
-        if (StringUtils.isBlank(tokenIp) || !ip.equals(tokenIp)){
+        try {
+            //token解析
+            Map<String,Object> body = Jwts.parser()
+                    //传入密钥
+                    .setSigningKey(SECRET)
+                    .parseClaimsJws(token)
+                    .getBody();
+            //验证无异常后刷新token过期时间
+            HashMap<String,Object> params = (HashMap<String, Object>) body.get("keyMap");
+            String tokenIp = params.get("ip").toString();
+            if (StringUtils.isBlank(tokenIp) || !ip.equals(tokenIp)){
+                throw new BusinessException(ResponseCodes.TOKENOVERDUE);
+            }
+            return params;
+
+        }catch (SignatureException e){
+            throw new BusinessException(ResponseCodes.TOKENERROR);
+        } catch (MalformedJwtException e) {
+            // token解析错误
+            throw new BusinessException(ResponseCodes.TOKENERROR);
+        } catch (ExpiredJwtException e) {
+            // jwt已经过期，在设置jwt的时候如果设置了过期时间，这里会自动判断jwt是否已经过期，如果过期则会抛出这个异常，我们可以抓住这个异常并作相关处理。
             throw new BusinessException(ResponseCodes.TOKENOVERDUE);
         }
-        return params;
+
     }
 
 

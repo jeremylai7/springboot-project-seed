@@ -46,8 +46,16 @@ public class LoginController {
     private User2Service user2Service;
 
     @ApiOperation(value = "登陆")
+    @ApiImplicitParams({
+            @ApiImplicitParam(value = "用户名",name = "username",required = true,paramType = "form"),
+            @ApiImplicitParam(value = "密码",name ="password",required = true,paramType = "form")
+    })
     @PostMapping("/login")
-    public String login(@ApiIgnore HttpServletRequest request,@ApiIgnore HttpServletResponse response,User user) throws Exception {
+    public Result login(@ApiIgnore HttpServletRequest request,@ApiIgnore HttpServletResponse response,String username,
+                        String password) throws Exception {
+        User user = new User();
+        user.setPassword(password);
+        user.setUsername(username);
         User list = userService.findById(user);
         if (list == null){
             throw new BusinessException(ResponseCodes.PASSWORD_ERROR);//密码错误
@@ -60,7 +68,9 @@ public class LoginController {
         String token = JwtUtil.generateToken(map);
         response.setHeader("Authorization",token);
         redisService.put(token,list.getId(),60*60);
-        return "success";
+        JSONObject data = new JSONObject();
+        data.put("records", user);
+        return OutUtil.success(user);
     }
 
     @ApiOperation(value = "添加用户",response = User.class)

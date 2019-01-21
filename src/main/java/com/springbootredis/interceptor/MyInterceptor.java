@@ -9,6 +9,7 @@ import com.springbootredis.model.User;
 import com.springbootredis.redis.RedisService;
 import com.springbootredis.util.JwtUtil;
 import com.springbootredis.util.NetUtil;
+import com.springbootredis.util.ProjectUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -41,9 +42,9 @@ public class MyInterceptor implements HandlerInterceptor{
 		String ip = NetUtil.getIpAddress(request);
 		response.setHeader("Content-Type", "application/json;charset=UTF-8");
 		response.setHeader("Authorization", authorization);
-
 		Map<String,Object> params = JwtUtil.validate(authorization,ip);
 		User user = JSONObject.parseObject(params.get("user").toString(),User.class);
+		ProjectUtil.setUser(request,user);
 		Integer userId = Integer.valueOf(redisService.get(authorization).toString());
 		if (redisService.get(authorization) == null){
 			throw new BusinessException(ResponseCodes.TOKENOVERDUE);
@@ -76,11 +77,11 @@ public class MyInterceptor implements HandlerInterceptor{
 
 	@Override
 	public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-		System.out.println("post");
+		//System.out.println("post");
 	}
 
 	@Override
 	public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
-		System.out.println("after");
+		//System.out.println("after");
 	}
 }
