@@ -16,7 +16,7 @@ spring:
       min-idle: 0
     timeout: 0
   datasource:
-    url: jdbc:mysql://localhost:3306/blog?useSSL=false&characterEncoding=UTF-8
+    url: jdbc:mysql://47.98.202.133:3306/blog?useSSL=false&characterEncoding=UTF-8
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver

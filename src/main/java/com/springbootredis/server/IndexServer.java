@@ -6,7 +6,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisShardInfo;
-import sun.util.locale.provider.JRELocaleConstants;
 
 import java.util.ArrayList;
 import java.util.List;
