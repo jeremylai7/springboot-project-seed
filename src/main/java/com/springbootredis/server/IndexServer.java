@@ -1,5 +1,4 @@
 package com.springbootredis.server;
-
 import com.springbootredis.exception.BusinessException;
 import com.springbootredis.model.User;
 
@@ -19,4 +18,5 @@ public interface IndexServer {
      * @param user
      */
     void updateAll(User user) throws BusinessException;
+
 }
