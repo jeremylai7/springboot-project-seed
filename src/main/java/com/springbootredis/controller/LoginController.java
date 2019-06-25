@@ -5,9 +5,7 @@ import com.springbootredis.exception.BusinessException;
 import com.springbootredis.exception.ResponseCodes;
 import com.springbootredis.model.Result;
 import com.springbootredis.model.User;
-import com.springbootredis.model.enums.UserType;
 import com.springbootredis.redis.RedisService;
-import com.springbootredis.server.User2Service;
 import com.springbootredis.server.UserService;
 import com.springbootredis.util.JwtUtil;
 import com.springbootredis.util.NetUtil;
@@ -23,7 +21,6 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

@@ -28,9 +28,6 @@ public class IndexController {
 	@Autowired
 	private IndexServer indexServer;
 
-	@Autowired
-    private UserService userService;
-
 	@ApiOperation(value = "添加用户")
     @PostMapping("/add")
     @ApiImplicitParams({
