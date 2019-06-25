@@ -46,11 +46,25 @@ public class IndexServerImpl implements IndexServer{
         Example example = new Example(User.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("username",user.getUsername());
+        criteria.andNotEqualTo("id",user.getId());
         List<User> list = userDao.selectByExample(example);
         if (list.size() > 0){
             throw new BusinessException(ResponseCodes.USERNAME_EXISTING);
         }
         userDao.updateByPrimaryKey(user);
+    }
+
+    @Override
+    public void update(User user) throws BusinessException {
+        Example example = new Example(User.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("username",user.getUsername());
+        criteria.andNotEqualTo("id",user.getId());
+        List<User> list = userDao.selectByExample(example);
+        if (list.size() > 0){
+            throw new BusinessException(ResponseCodes.USERNAME_EXISTING);
+        }
+        userDao.updateByPrimaryKeySelective(user);
     }
 
     @Cacheable(value = "user1",key = "#aa",condition = "#aa.length() > 2")

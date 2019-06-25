@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Logined
-@Api("首页api")
+//@Logined
+@Api(value = "首页api",description = "首页api desc")
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/index")
 public class IndexController {
 	@Autowired
 	private IndexServerImpl indexServer;
@@ -50,6 +50,12 @@ public class IndexController {
 	    return OutUtil.success(null);
     }
 
+    @ApiOperation(value = "修改用户信息")
+    @PostMapping("/update")
+    public Result update(User user) throws BusinessException {
+	    indexServer.update(user);
+	    return OutUtil.success(null);
+    }
 
 	@ApiOperation(value = "添加",response = User.class)
 	@RequestMapping(value = "/index",method = RequestMethod.GET)

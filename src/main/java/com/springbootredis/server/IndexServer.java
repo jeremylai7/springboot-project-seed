@@ -19,4 +19,9 @@ public interface IndexServer {
      */
     void updateAll(User user) throws BusinessException;
 
+    /**
+     * 修改
+     * @param user
+     */
+    void update(User user) throws BusinessException;
 }
