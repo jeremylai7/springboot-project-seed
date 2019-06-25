@@ -41,4 +41,11 @@ public interface BaseService<T> {
      * @return
      */
     int deleteByPrimaryKey(int t);
+
+    /**
+     * 查询数量
+     * @param t
+     * @return
+     */
+    int selectCount(T t);
 }

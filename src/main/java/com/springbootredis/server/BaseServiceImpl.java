@@ -6,7 +6,7 @@ import tk.mybatis.mapper.common.Mapper;
 import javax.annotation.Resource;
 import java.util.List;
 
-/**
+/**   通用service
  * @Auther: laizc
  * @Date: 2019/1/6 15:00
  * @Description:
@@ -34,5 +34,10 @@ public class BaseServiceImpl<T> implements BaseService<T> {
     @Override
     public int deleteByPrimaryKey(int t) {
         return mapper.deleteByPrimaryKey(t);
+    }
+
+    @Override
+    public int selectCount(T t) {
+        return mapper.selectCount(t);
     }
 }

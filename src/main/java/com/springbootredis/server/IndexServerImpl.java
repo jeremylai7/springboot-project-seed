@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class IndexServerImpl implements IndexServer{
+public class IndexServerImpl extends BaseServiceImpl<User> implements IndexServer {
     @Resource
     private UserDao userDao;
 
@@ -35,6 +35,7 @@ public class IndexServerImpl implements IndexServer{
             throw new BusinessException(ResponseCodes.USERNAME_EXISTING);
         }
         User user = new User();
+        user.setRoleId("2");
         user.setUsername(username);
         user.setPassword(password);
         user.setAge(18);
@@ -67,11 +68,6 @@ public class IndexServerImpl implements IndexServer{
             throw new BusinessException(ResponseCodes.USERNAME_EXISTING);
         }
         userDao.updateByPrimaryKeySelective(user);
-    }
-
-    @Override
-    public void delete(Integer id) {
-        userDao.deleteByPrimaryKey(id);
     }
 
     @Override

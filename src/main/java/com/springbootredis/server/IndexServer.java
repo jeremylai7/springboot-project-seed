@@ -9,7 +9,7 @@ import java.util.List;
  * @Author: laizc
  * @Date: Created in 9:52 2019-06-25
  */
-public interface IndexServer {
+public interface IndexServer extends BaseService<User>{
     /**
      * 添加
      * @param
@@ -28,11 +28,6 @@ public interface IndexServer {
      */
     void update(User user) throws BusinessException;
 
-    /**
-     * 删除
-     * @param id
-     */
-    void delete(Integer id);
 
     /**
      * 分页查询

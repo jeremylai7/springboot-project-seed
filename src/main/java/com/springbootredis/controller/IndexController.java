@@ -59,7 +59,7 @@ public class IndexController {
     @ApiOperation(value = "删除用户")
     @PostMapping("/delete")
     public Result delete(Integer id){
-	    indexServer.delete(id);
+	    indexServer.deleteByPrimaryKey(id);
 	    return OutUtil.success(null);
     }
 
@@ -77,9 +77,10 @@ public class IndexController {
         return OutUtil.success(list);
     }
 
-    @GetMapping(value = "user-list")
+    @ApiOperation(value = "获取所有用户",response = User.class)
+    @GetMapping(value = "/all")
     public Result userList(){
-	    List<User> list = userService.findAll();
+	    List<User> list = indexServer.findAll();
         return OutUtil.success(list);
     }
 
