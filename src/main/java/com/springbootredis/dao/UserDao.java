@@ -12,5 +12,5 @@ import java.util.List;
  * @Date: Created in 10:08 2019-01-07
  */
 public interface UserDao extends Mapper<User>{
-    public List<User> findByType(String state);
+    List<User> findByType(String state);
 }

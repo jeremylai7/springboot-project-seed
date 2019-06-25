@@ -1,8 +1,9 @@
 package com.springbootredis.server;
 
-import com.springbootredis.util.MyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import tk.mybatis.mapper.common.Mapper;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -11,8 +12,9 @@ import java.util.List;
  * @Description:
  */
 public class BaseServiceImpl<T> implements BaseService<T> {
+
     @Autowired
-    private MyMapper<T> mapper;
+    private Mapper<T> mapper;
 
     @Override
     public List<T> findAll() {

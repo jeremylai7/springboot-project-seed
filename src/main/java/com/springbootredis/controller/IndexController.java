@@ -6,6 +6,7 @@ import com.springbootredis.model.Result;
 import com.springbootredis.model.User;
 import com.springbootredis.model.UserQuery;
 import com.springbootredis.redis.RedisService;
+import com.springbootredis.server.IndexServer;
 import com.springbootredis.server.IndexServerImpl;
 import com.springbootredis.server.UserService;
 import com.springbootredis.util.OutUtil;
@@ -25,10 +26,10 @@ import java.util.List;
 @RequestMapping("/index")
 public class IndexController {
 	@Autowired
-	private IndexServerImpl indexServer;
+	private IndexServer indexServer;
 
 	@Autowired
-	private RedisService redisService;
+    private UserService userService;
 
 	@ApiOperation(value = "添加用户")
     @PostMapping("/add")
@@ -73,6 +74,12 @@ public class IndexController {
     @GetMapping("find-redis")
     public Result findRedis(UserQuery query){
         List<User> list = indexServer.findRedis(query);
+        return OutUtil.success(list);
+    }
+
+    @GetMapping(value = "user-list")
+    public Result userList(){
+	    List<User> list = userService.findAll();
         return OutUtil.success(list);
     }
 

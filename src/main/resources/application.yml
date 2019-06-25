@@ -29,6 +29,10 @@ pagehelper:
   reasonable: true
   support-methods-arguments: true
   params: countSql
+mapper:
+  mappers: com.springbootredis.util.MyMapper
+  not-empty: false
+  identity: MYSQL
 ---
 #生产环境
 spring:
@@ -58,6 +62,10 @@ pagehelper:
   reasonable: true
   support-methods-arguments: true
   params: countSql
+mapper:
+  mappers: com.springbootredis.util.MyMapper
+  not-empty: false
+  identity: MYSQL
 
 ---
 #公共部门

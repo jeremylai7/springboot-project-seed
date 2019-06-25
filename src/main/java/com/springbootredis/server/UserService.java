@@ -10,16 +10,6 @@ import java.util.List;
  * @Date: 2019/1/6 15:04
  * @Description:
  */
-public interface UserService{
-    List<User> findAll(UserType state);
+public interface UserService extends BaseService<User>{
 
-    List<User> find();
-
-    User findById(User user);
-
-    int add(User user);
-
-    int update(User user);
-
-    int delete(int id);
 }

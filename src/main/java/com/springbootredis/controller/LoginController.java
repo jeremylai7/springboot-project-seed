@@ -1,16 +1,12 @@
 package com.springbootredis.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.springbootredis.exception.BusinessException;
-import com.springbootredis.exception.ResponseCodes;
 import com.springbootredis.model.Result;
 import com.springbootredis.model.User;
 import com.springbootredis.model.enums.UserType;
 import com.springbootredis.redis.RedisService;
 import com.springbootredis.server.User2Service;
 import com.springbootredis.server.UserService;
-import com.springbootredis.util.JwtUtil;
-import com.springbootredis.util.NetUtil;
 import com.springbootredis.util.OutUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -22,10 +18,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Auther: laizc
@@ -61,7 +54,7 @@ public class LoginController {
     @PostMapping("/login")
     public Result login(@ApiIgnore HttpServletRequest request,@ApiIgnore HttpServletResponse response,String username,
                         String password) throws Exception {
-        User user = new User();
+        /*User user = new User();
         user.setPassword(password);
         user.setUsername(username);
         User list = userService.findById(user);
@@ -77,14 +70,14 @@ public class LoginController {
         response.setHeader("Authorization",token);
         redisService.put(token,list.getId(),60*60);
         JSONObject data = new JSONObject();
-        data.put("records", user);
-        return OutUtil.success(user);
+        data.put("records", user);*/
+        return OutUtil.success(null);
     }
 
     @ApiOperation(value = "添加用户",response = User.class)
     @PostMapping("/add")
     public Result add(@ApiIgnore HttpServletRequest request,User user) throws BusinessException {
-        User user1 = userService.findById(user);
+        /*User user1 = userService.findById(user);
         if (user1 != null){
             throw new BusinessException(ResponseCodes.USERNAME_EXISTING);//用户名不能重复
         }
@@ -98,7 +91,7 @@ public class LoginController {
             user2Service.add(user);
         }
         long endTime = System.currentTimeMillis();
-        System.out.println("时间差"+(endTime - beginTime));
+        System.out.println("时间差"+(endTime - beginTime));*/
 
         return OutUtil.success("添加成功");
     }
@@ -113,11 +106,12 @@ public class LoginController {
     })
     @GetMapping("/list")
     public Result list(String username, @ApiIgnore HttpServletRequest request){
-       long beginTime = System.currentTimeMillis();
+      /* long beginTime = System.currentTimeMillis();
        List<User> list = userService.find();
        long endTime = System.currentTimeMillis();
        System.out.println("========================>查询时间"+(endTime - beginTime));
-       return OutUtil.success(list);
+       return OutUtil.success(list);*/
+      return OutUtil.success(null);
     }
 
     @ApiOperation(value = "查询不同状态用户",response = User.class)

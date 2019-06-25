@@ -14,45 +14,6 @@ import java.util.List;
  * @Description:
  */
 @Service
-public class UserServiceImpl  implements UserService {
-    @Resource
-    private UserDao userDao;
+public class UserServiceImpl extends BaseServiceImpl<User>  implements UserService{
 
-
-    @Override
-    public List<User> findAll(UserType state) {
-        String code = state.getCode();
-        return userDao.findByType(code);
-    }
-
-    @Override
-    public List<User> find() {
-        return userDao.selectAll();
-    }
-
-    @Override
-    public User findById(User user) {
-        User newUser = new User();
-
-        List<User> list = userDao.selectByExample(newUser);
-
-        return userDao.selectOne(user);
-    }
-
-    @Override
-    public int add(User user) {
-        user.setId(null);
-        user.setTop(false);
-        return userDao.insert(user);
-    }
-
-    @Override
-    public int update(User user) {
-        return 0;
-    }
-
-    @Override
-    public int delete(int id) {
-        return 0;
-    }
 }
