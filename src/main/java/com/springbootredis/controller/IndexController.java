@@ -4,6 +4,7 @@ import com.springbootredis.annotation.Logined;
 import com.springbootredis.exception.BusinessException;
 import com.springbootredis.model.Result;
 import com.springbootredis.model.User;
+import com.springbootredis.model.UserQuery;
 import com.springbootredis.redis.RedisService;
 import com.springbootredis.server.IndexServerImpl;
 import com.springbootredis.server.UserService;
@@ -27,9 +28,6 @@ public class IndexController {
 	private IndexServerImpl indexServer;
 
 	@Autowired
-	private UserService userService;
-
-	@Autowired
 	private RedisService redisService;
 
 	@ApiOperation(value = "添加用户")
@@ -43,58 +41,45 @@ public class IndexController {
 	    return OutUtil.success(null);
 	}
 
-	@ApiOperation(value = "全修改用户信息")
+	@ApiOperation(value = "全修改用户")
     @PostMapping("/update-all")
     public Result updateAll(User user) throws BusinessException {
         indexServer.updateAll(user);
 	    return OutUtil.success(null);
     }
 
-    @ApiOperation(value = "修改用户信息")
+    @ApiOperation(value = "修改用户")
     @PostMapping("/update")
     public Result update(User user) throws BusinessException {
 	    indexServer.update(user);
 	    return OutUtil.success(null);
     }
 
-	@ApiOperation(value = "添加",response = User.class)
-	@RequestMapping(value = "/index",method = RequestMethod.GET)
-	public List<String> index(String aa){
-		return  indexServer.index(aa);
-	}
+    @ApiOperation(value = "删除用户")
+    @PostMapping("/delete")
+    public Result delete(Integer id){
+	    indexServer.delete(id);
+	    return OutUtil.success(null);
+    }
 
-	@RequestMapping(value = "get/index",method = RequestMethod.GET)
-	public List<String> get(){
-		List<String> list = new ArrayList<>();
-		list.add("uu");
-		list.add("yyt");
-		return list;
-	}
+    @ApiOperation(value = "分页获取用户",response = User.class)
+    @GetMapping("/find")
+    public Result find(UserQuery query){
+        List<User> list = indexServer.find(query);
+	    return OutUtil.success(list);
+    }
 
-	@ApiOperation(value = "获取所有用户",response = User.class)
-	@GetMapping("/getList")
-	public Result getList(){
-		List<User> list = userService.find();
-		return OutUtil.success(list);
-	}
+    @ApiOperation(value = "redis 获取用户")
+    @GetMapping("find-redis")
+    public Result findRedis(UserQuery query){
+        List<User> list = indexServer.findRedis(query);
+        return OutUtil.success(list);
+    }
 
-	@RequestMapping(value = "/login",method = RequestMethod.GET)
-	public List<String> login(){
-		List<String> list = new ArrayList<>();
-		list.add("bbvv");
-		list.add("7789");
-		return  list;
-	}
 
-	@RequestMapping(value = "/remove",method = RequestMethod.GET)
-	public void remove(String aa){
-		indexServer.remove(aa);
-	}
 
-	@GetMapping("/put")
-	public void put(String aa){
-		indexServer.cachePut(aa);
-	}
+
+
 
 
 

@@ -1,6 +1,9 @@
 package com.springbootredis.server;
 import com.springbootredis.exception.BusinessException;
 import com.springbootredis.model.User;
+import com.springbootredis.model.UserQuery;
+
+import java.util.List;
 
 /**
  * @Author: laizc
@@ -24,4 +27,24 @@ public interface IndexServer {
      * @param user
      */
     void update(User user) throws BusinessException;
+
+    /**
+     * 删除
+     * @param id
+     */
+    void delete(Integer id);
+
+    /**
+     * 分页查询
+     * @param query
+     * @return
+     */
+    List<User> find(UserQuery query);
+
+    /**
+     * 分页查询 整合redis
+     * @param query
+     * @return
+     */
+    List<User> findRedis(UserQuery query);
 }

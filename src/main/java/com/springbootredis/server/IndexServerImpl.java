@@ -1,9 +1,11 @@
 package com.springbootredis.server;
 
+import com.github.pagehelper.PageHelper;
 import com.springbootredis.dao.UserDao;
 import com.springbootredis.exception.BusinessException;
 import com.springbootredis.exception.ResponseCodes;
 import com.springbootredis.model.User;
+import com.springbootredis.model.UserQuery;
 import com.springbootredis.model.enums.UserType;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -67,34 +69,36 @@ public class IndexServerImpl implements IndexServer{
         userDao.updateByPrimaryKeySelective(user);
     }
 
-    @Cacheable(value = "user1",key = "#aa",condition = "#aa.length() > 2")
-	public List<String> index(String aa){
-		List<String> list = new ArrayList<>();
-		list.add("aa");
-		list.add("bb");
-		System.out.println("-------执行了-------");
-		System.out.println(aa);
-		return list;
-	}
+    @Override
+    public void delete(Integer id) {
+        userDao.deleteByPrimaryKey(id);
+    }
 
-	@CacheEvict(value = "user1",allEntries = false,key = "#aa")
-	public List<String> remove(String aa){
-		System.out.println(12);
-		return null;
-	}
+    @Override
+    public List<User> find(UserQuery query) {
+        int count = userDao.selectCount(null);
+        if (count > 0){
+            PageHelper.startPage(query.getPageNo(),query.getPageSize());
+            return userDao.selectAll();
+        }
+        return null;
+    }
 
-	@CachePut(value = "user",key = "#aa")
-	public List<String> cachePut(String aa){
-		List<String> list = new ArrayList<>();
-		list.add("aa");
-		list.add("cc");
-		return list;
-	}
+    @Override
+    @Cacheable(value = "indexUser",key = "'user'")
+    public List<User> findRedis(UserQuery query) {
+        System.out.println("--------------执行了--------------");
+        int count = userDao.selectCount(null);
+        if (count > 0){
+            PageHelper.startPage(query.getPageNo(),query.getPageSize());
+            return userDao.selectAll();
+        }
+        return null;
 
-
+    }
     public static void main(String[] args) {
-        JedisShardInfo jedisShardInfo = new JedisShardInfo("47.98.20.133",6379,10000);
-        jedisShardInfo.setPassword("");
+        JedisShardInfo jedisShardInfo = new JedisShardInfo("47.98.202.133",6379,10000);
+        jedisShardInfo.setPassword("123451");
         Jedis jedis = new Jedis(jedisShardInfo);
         jedis.connect();
         jedis.set("name","jeremy");
