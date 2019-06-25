@@ -1,33 +1,55 @@
 package com.springbootredis.controller;
 
 import com.springbootredis.annotation.Logined;
+import com.springbootredis.exception.BusinessException;
 import com.springbootredis.model.Result;
 import com.springbootredis.model.User;
 import com.springbootredis.redis.RedisService;
-import com.springbootredis.server.IndexServer;
+import com.springbootredis.server.IndexServerImpl;
 import com.springbootredis.server.UserService;
 import com.springbootredis.util.OutUtil;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-@Logined
+
+//@Logined
 @Api("首页api")
 @RestController
+@RequestMapping("/user")
 public class IndexController {
 	@Autowired
-	private IndexServer indexServer;
+	private IndexServerImpl indexServer;
 
 	@Autowired
 	private UserService userService;
 
 	@Autowired
 	private RedisService redisService;
+
+	@ApiOperation(value = "添加用户")
+    @PostMapping("/add")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "username",value = "用户名",paramType = "query",required = true),
+            @ApiImplicitParam(name = "password",value = "密码",paramType = "query",required = true)
+    })
+    public Result add(String username,String password) throws BusinessException {
+	    indexServer.add(username,password);
+	    return OutUtil.success(null);
+	}
+
+	@ApiOperation(value = "全修改用户信息")
+    @PostMapping("/update-all")
+    public Result updateAll(User user) throws BusinessException {
+        indexServer.updateAll(user);
+	    return OutUtil.success(null);
+    }
+
 
 	@ApiOperation(value = "添加",response = User.class)
 	@RequestMapping(value = "/index",method = RequestMethod.GET)

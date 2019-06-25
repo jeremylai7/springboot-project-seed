@@ -35,6 +35,13 @@ public class JwtUtil {
         return jwt;
     }
 
+    /**
+     * 解密
+     * @param token
+     * @param ip
+     * @return
+     * @throws BusinessException
+     */
     public static Map<String,Object> validate(String token,String ip) throws BusinessException {
         if (StringUtils.isBlank(token)){
             throw new BusinessException(ResponseCodes.TOKENNULL);

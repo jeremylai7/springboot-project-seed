@@ -6,7 +6,7 @@
 	<groupId>com</groupId>
 	<artifactId>springbootredis</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+    <packaging>pom</packaging>
 
 	<name>springbootredis</name>
 	<description>Demo project for Spring Boot</description>
@@ -82,7 +82,6 @@
 			<artifactId>springfox-swagger2</artifactId>
 			<version>2.6.1</version>
 		</dependency>
-
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>

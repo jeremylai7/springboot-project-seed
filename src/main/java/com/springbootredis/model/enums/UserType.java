@@ -21,13 +21,11 @@ public enum  UserType implements BaseCodeEnum {
 
     @Override
     public String getCode() {
-        System.out.println(11111);
         return this.code;
     }
 
     @Override
     public String getCaption() {
-        System.out.println(2222);
         return this.caption;
     }
 }

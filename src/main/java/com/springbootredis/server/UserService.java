@@ -11,15 +11,15 @@ import java.util.List;
  * @Description:
  */
 public interface UserService{
-    public List<User> findAll(UserType state);
+    List<User> findAll(UserType state);
 
-    public List<User> find();
+    List<User> find();
 
-    public User findById(User user);
+    User findById(User user);
 
-    public int add(User user);
+    int add(User user);
 
-    public int update(User user);
+    int update(User user);
 
-    public int delete(int id);
+    int delete(int id);
 }

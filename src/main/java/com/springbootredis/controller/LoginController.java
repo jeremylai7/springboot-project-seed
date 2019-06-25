@@ -22,6 +22,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +45,13 @@ public class LoginController {
 
     @Autowired
     private User2Service user2Service;
+
+    @ApiOperation(value = "测试")
+    @GetMapping("/test")
+    public Result test(){
+        System.out.println("test");
+        return OutUtil.success("");
+    }
 
     @ApiOperation(value = "登陆")
     @ApiImplicitParams({
@@ -80,7 +88,18 @@ public class LoginController {
         if (user1 != null){
             throw new BusinessException(ResponseCodes.USERNAME_EXISTING);//用户名不能重复
         }
-        user2Service.add(user);
+        int len = 100000000;
+        long beginTime = System.currentTimeMillis();
+        for (int i = 0; i <len ; i++) {
+            User user2 = new User();
+            user2.setUsername("小明"+i);
+            user2.setPassword("142424");
+            user.setAge(23);
+            user2Service.add(user);
+        }
+        long endTime = System.currentTimeMillis();
+        System.out.println("时间差"+(endTime - beginTime));
+
         return OutUtil.success("添加成功");
     }
 
@@ -90,11 +109,14 @@ public class LoginController {
      */
     @ApiOperation(value = "获取所有用户",response = User.class)
     @ApiImplicitParams({
-            @ApiImplicitParam(value = "用户名",name = "username")
+            @ApiImplicitParam(value = "用户名",name = "username",paramType = "query")
     })
     @GetMapping("/list")
     public Result list(String username, @ApiIgnore HttpServletRequest request){
+       long beginTime = System.currentTimeMillis();
        List<User> list = userService.find();
+       long endTime = System.currentTimeMillis();
+       System.out.println("========================>查询时间"+(endTime - beginTime));
        return OutUtil.success(list);
     }
 

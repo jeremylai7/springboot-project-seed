@@ -1,9 +1,6 @@
 package com.springbootredis.util;
 
-import com.springbootredis.model.User;
 import tk.mybatis.mapper.common.Mapper;
-
-import javax.annotation.Resource;
 
 /**
  * @Auther: laizc

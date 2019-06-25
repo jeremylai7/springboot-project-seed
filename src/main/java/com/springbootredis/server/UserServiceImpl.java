@@ -32,6 +32,10 @@ public class UserServiceImpl  implements UserService {
 
     @Override
     public User findById(User user) {
+        User newUser = new User();
+
+        List<User> list = userDao.selectByExample(newUser);
+
         return userDao.selectOne(user);
     }
 
