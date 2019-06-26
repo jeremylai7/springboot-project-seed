@@ -33,6 +33,7 @@ mapper:
   mappers: com.springbootredis.util.MyMapper
   not-empty: false
   identity: MYSQL
+  enum-as-simple-type: true
 ---
 #生产环境
 spring:
@@ -66,6 +67,8 @@ mapper:
   mappers: com.springbootredis.util.MyMapper
   not-empty: false
   identity: MYSQL
+  enum-as-simple-type: true
+
 
 ---
 #公共部门

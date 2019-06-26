@@ -1,9 +1,11 @@
 package com.springbootredis.model;
 
+import com.springbootredis.config.handle.EnumHandle;
 import com.springbootredis.model.enums.UserType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import tk.mybatis.mapper.annotation.ColumnType;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
