@@ -1,12 +1,7 @@
 package com.springbootredis.server;
 
-import com.springbootredis.dao.UserDao;
 import com.springbootredis.model.User;
-import com.springbootredis.model.enums.UserType;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @Auther: laizc

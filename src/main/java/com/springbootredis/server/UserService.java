@@ -1,9 +1,6 @@
 package com.springbootredis.server;
 
 import com.springbootredis.model.User;
-import com.springbootredis.model.enums.UserType;
-
-import java.util.List;
 
 /**
  * @Auther: laizc

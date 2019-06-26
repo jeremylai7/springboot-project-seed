@@ -7,8 +7,6 @@ import com.springbootredis.exception.ResponseCodes;
 import com.springbootredis.model.User;
 import com.springbootredis.model.UserQuery;
 import com.springbootredis.model.enums.UserType;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
@@ -16,7 +14,6 @@ import redis.clients.jedis.JedisShardInfo;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

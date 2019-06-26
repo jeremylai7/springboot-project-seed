@@ -11,11 +11,11 @@ public interface RedisService {
      * @param doamin 对象
      * @param expire 过期时间 单位秒  -1不设置过期时间
      */
-    public void put(String key,Object doamin,long expire);
+    void put(String key,Object doamin,long expire);
 
     /**
      *
      * @param key key
      */
-    public Object get(String key);
+    Object get(String key);
 }

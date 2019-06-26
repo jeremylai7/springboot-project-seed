@@ -3,7 +3,6 @@ package com.springbootredis.server;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.common.Mapper;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**   通用service
