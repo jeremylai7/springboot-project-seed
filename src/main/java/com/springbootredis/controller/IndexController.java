@@ -66,10 +66,17 @@ public class IndexController {
     }
 
     @ApiOperation(value = "redis 获取用户")
-    @GetMapping("find-redis")
+    @GetMapping("/find-redis")
     public Result findRedis(UserQuery query){
         List<User> list = indexServer.findRedis(query);
         return OutUtil.success(list);
+    }
+
+    @ApiOperation(value = "清楚缓存")
+    @GetMapping("/clean-cache")
+    public Result cleanCache(){
+	    indexServer.ClearnCache();
+	    return OutUtil.success(null);
     }
 
     @ApiOperation(value = "获取所有用户",response = User.class)

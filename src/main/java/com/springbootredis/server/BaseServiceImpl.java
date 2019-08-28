@@ -1,5 +1,6 @@
 package com.springbootredis.server;
 
+import com.springbootredis.util.MyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.common.Mapper;
 

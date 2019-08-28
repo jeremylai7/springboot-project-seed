@@ -6,7 +6,7 @@
 	<groupId>com</groupId>
 	<artifactId>springbootredis</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    <packaging>war</packaging>
 
 	<name>springbootredis</name>
 	<description>Demo project for Spring Boot</description>
@@ -34,7 +34,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
-		<!--通过mapper-->
+		<!--通用mapper-->
 		<dependency>
 			<groupId>tk.mybatis</groupId>
 			<artifactId>mapper-spring-boot-starter</artifactId>
@@ -109,6 +109,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>springboot-redis</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

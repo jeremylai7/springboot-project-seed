@@ -42,4 +42,9 @@ public interface IndexServer extends BaseService<User>{
      * @return
      */
     List<User> findRedis(UserQuery query);
+
+    /**
+     * 清理缓存
+     */
+    void ClearnCache();
 }

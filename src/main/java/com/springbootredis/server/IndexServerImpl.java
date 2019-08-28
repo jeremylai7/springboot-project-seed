@@ -7,6 +7,8 @@ import com.springbootredis.exception.ResponseCodes;
 import com.springbootredis.model.User;
 import com.springbootredis.model.UserQuery;
 import com.springbootredis.model.enums.UserType;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
@@ -78,7 +80,12 @@ public class IndexServerImpl extends BaseServiceImpl<User> implements IndexServe
     }
 
     @Override
-    @Cacheable(value = "indexUser",key = "'user'")
+    //@Cacheable(value = "indexUser")//每次都会生成的key都是不同的，所以每次都会生成新的缓存
+    //@Cacheable(value = "indexUser",key = "'user'")//每次key都是一样，除了第一次都不会生成新的缓存
+    //@Cacheable(value = "indexUser",key = "#query.pageSize+'-'+#query.pageSize")
+    //@Cacheable(value="indexUser", key="#p0.pageSize+''")
+    //@Cacheable(value = "indexUser",key = "#p0.pageSize+''",condition = "#p0.pageSize > 2")
+    @CachePut(value = "indexUser",key = "'user'",condition = "#p0.pageSize > 2")
     public List<User> findRedis(UserQuery query) {
         System.out.println("--------------执行了--------------");
         int count = userDao.selectCount(null);
@@ -89,9 +96,17 @@ public class IndexServerImpl extends BaseServiceImpl<User> implements IndexServe
         return null;
 
     }
+
+    @Override
+    //@CacheEvict(value = "indexUser",key = "'user'")
+    @CacheEvict(value = "indexUser",allEntries = true)//清除所有的元素
+    public void ClearnCache() {
+
+    }
+
     public static void main(String[] args) {
         JedisShardInfo jedisShardInfo = new JedisShardInfo("47.98.202.133",6379,10000);
-        jedisShardInfo.setPassword("123451");
+        jedisShardInfo.setPassword("1234561");
         Jedis jedis = new Jedis(jedisShardInfo);
         jedis.connect();
         jedis.set("name","jeremy");
