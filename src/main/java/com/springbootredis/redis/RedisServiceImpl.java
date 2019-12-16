@@ -1,6 +1,7 @@
 package com.springbootredis.redis;
 
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
@@ -33,7 +34,6 @@ public class RedisServiceImpl implements RedisService {
 
     @Override
     public Object get(String key) {
-        ValueOperations<String,Object> ov = redisTemplate.opsForValue();
-        return ov.get(key);
+        return redisTemplate.opsForValue().get(key);
     }
 }

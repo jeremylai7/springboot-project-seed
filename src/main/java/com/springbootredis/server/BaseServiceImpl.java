@@ -40,4 +40,9 @@ public class BaseServiceImpl<T> implements BaseService<T> {
     public int selectCount(T t) {
         return mapper.selectCount(t);
     }
+
+    @Override
+    public T selectOne(T t) {
+        return mapper.selectOne(t);
+    }
 }

@@ -8,10 +8,10 @@
         <result column="password" property="password" jdbcType="VARCHAR"/>
         <result column="age" property="age" jdbcType="INTEGER"/>
         <result column="top" property="top" jdbcType="BIT"/>
-        <result column="userType" property="userType" jdbcType="VARCHAR"/>
+        <result column="user_type" property="userType" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, role_id, username, password, age, top, userType
+        id, role_id, username, password, age, top, user_type
     </sql>
     <select id="findByType" parameterType="java.lang.String" resultMap="BaseResultMap" >
         select
@@ -25,7 +25,7 @@
     </select>
 
     <insert id="add" parameterType="com.springbootredis.model.User">
-        insert into user (id,role_id,username, password, age, top, userType) values
+        insert into user (id,role_id,username, password, age, top, user_type) values
         (#{id},#{roleId},#{username}, #{password}, #{age}, #{top}, #{userType})
     </insert>
 </mapper>

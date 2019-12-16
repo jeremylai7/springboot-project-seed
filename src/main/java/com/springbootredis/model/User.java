@@ -7,17 +7,14 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import tk.mybatis.mapper.annotation.ColumnType;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * @Author: laizc
  * @Date: Created in 16:44 2018-12-18
  */
 @ApiModel("用户信息")
-@Table(name = "user")
+@Table(name = "t_user")
 @Data
 public class User {
     @ApiModelProperty("主键")

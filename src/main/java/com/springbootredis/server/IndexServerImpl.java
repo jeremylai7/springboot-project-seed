@@ -36,11 +36,12 @@ public class IndexServerImpl extends BaseServiceImpl<User> implements IndexServe
         User user = new User();
         user.setRoleId("2");
         user.setUsername(username);
-        user.setPassword(password);
         user.setAge(18);
         user.setTop(false);
         user.setUserType(UserType.NORMAL);
         userDao.insert(user);
+        System.out.println(user);
+
 	}
 
     @Override

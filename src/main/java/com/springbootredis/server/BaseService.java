@@ -27,8 +27,8 @@ public interface BaseService<T> {
     /**
      * 修改
      *
-     * @param t
-     *            实体
+     * @param t   实体
+     *
      * @return
      */
     int updateByPrimaryKey(T t);
@@ -44,8 +44,15 @@ public interface BaseService<T> {
 
     /**
      * 查询数量
-     * @param t
+     * @param t 实体
      * @return
      */
     int selectCount(T t);
+
+    /**
+     * 查询单个数据
+     * @param t   实体
+     * @return
+     */
+    T selectOne(T t);
 }

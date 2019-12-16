@@ -1,5 +1,6 @@
 package com.springbootredis.server;
 
+import com.springbootredis.exception.BusinessException;
 import com.springbootredis.model.User;
 
 /**
@@ -9,4 +10,11 @@ import com.springbootredis.model.User;
  */
 public interface UserService extends BaseService<User>{
 
+    /**
+     * 登录
+     * @param username  用户名
+     * @param password  密码
+     * @return
+     */
+    User login(String username, String password) throws BusinessException;
 }

@@ -2,9 +2,7 @@ package com.springbootredis;
 
 import javafx.scene.media.SubtitleTrack;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Author: laizc
@@ -20,6 +18,8 @@ public class Test1 {
         char[] s = new char[3];
         int a =test1.reverseString(3);
         System.out.println(a);
+        HashMap<String,String> map = new HashMap<>();
+        map.put("aa","aa");
     }
 
     public void test(){

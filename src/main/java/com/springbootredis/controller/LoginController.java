@@ -10,6 +10,7 @@ import com.springbootredis.server.UserService;
 import com.springbootredis.util.JwtUtil;
 import com.springbootredis.util.NetUtil;
 import com.springbootredis.util.OutUtil;
+import com.springbootredis.util.encrypt.Md5xEncrypter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -50,14 +51,7 @@ public class LoginController {
     @PostMapping("/login")
     public Result login(@ApiIgnore HttpServletRequest request,@ApiIgnore HttpServletResponse response,String username,
                         String password) throws Exception {
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(password);
-        int count = userService.selectCount(user);
-        if (count < 1){
-            //密码错误
-            throw new BusinessException(ResponseCodes.PASSWORD_ERROR);
-        }
+        User user = userService.login(username,password);
         //传入token参数
         Map<String,Object> map = new HashMap<>();
         String ip = NetUtil.getIpAddress(request);
@@ -66,8 +60,6 @@ public class LoginController {
         String token = JwtUtil.generateToken(map);
         response.setHeader("Authorization",token);
         redisService.put(token,user.getId(),60*60);
-        JSONObject data = new JSONObject();
-        data.put("records", user);
-        return OutUtil.success(null);
+        return OutUtil.success(user);
     }
 }
