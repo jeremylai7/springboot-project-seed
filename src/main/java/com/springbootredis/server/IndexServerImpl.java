@@ -7,6 +7,7 @@ import com.springbootredis.exception.ResponseCodes;
 import com.springbootredis.model.User;
 import com.springbootredis.model.UserQuery;
 import com.springbootredis.model.enums.UserType;
+import com.springbootredis.util.encrypt.Md5xEncrypter;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -23,14 +24,15 @@ public class IndexServerImpl extends BaseServiceImpl<User> implements IndexServe
     @Resource
     private UserDao userDao;
 
+    private static Md5xEncrypter md5xEncrypter = new Md5xEncrypter(8);
+
     @Override
     public void add(String username,String password) throws BusinessException {
-        Example example = new Example(User.class);
-        Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("username",username);
-        List<User> list = userDao.selectByExample(example);
-        if (list.size() > 0){
-            //用户名存在
+        User oldUser = new User();
+        oldUser.setUsername(username);
+        int count = selectCount(oldUser);
+        //用户名存在
+        if (count > 0){
             throw new BusinessException(ResponseCodes.USERNAME_EXISTING);
         }
         User user = new User();
@@ -40,9 +42,11 @@ public class IndexServerImpl extends BaseServiceImpl<User> implements IndexServe
         user.setTop(false);
         user.setUserType(UserType.NORMAL);
         userDao.insert(user);
-        System.out.println(user);
-
-	}
+        User newUser = new User();
+        newUser.setPassword(md5xEncrypter.encryptByMd5Source(password,user.getId()));
+        newUser.setId(user.getId());
+        userDao.updateByPrimaryKeySelective(newUser);
+    }
 
     @Override
     public void updateAll(User user) throws BusinessException {
