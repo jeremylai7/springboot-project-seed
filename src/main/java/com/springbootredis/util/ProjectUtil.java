@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletRequest;
  * @desc 工程工具类
  */
 public class ProjectUtil {
+
     private static final String USER = "user";
+
     private static final String USER_ID = "userId";
 
     public static Object getUser(HttpServletRequest request) {

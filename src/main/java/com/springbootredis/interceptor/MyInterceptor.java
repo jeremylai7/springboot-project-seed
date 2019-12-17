@@ -10,11 +10,14 @@ import com.springbootredis.redis.RedisService;
 import com.springbootredis.util.JwtUtil;
 import com.springbootredis.util.NetUtil;
 import com.springbootredis.util.ProjectUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,16 +25,17 @@ import java.lang.reflect.Method;
 import java.util.Map;
 
 @Component
-public class MyInterceptor implements HandlerInterceptor{
+public class MyInterceptor extends HandlerInterceptorAdapter{
 	@Autowired
 	private RedisService redisService;
 
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
-		HandlerMethod handlerMethod = (HandlerMethod) o;
-		if (!(handlerMethod instanceof HandlerMethod)) {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+		System.out.println("==================================>" + request.getServletPath() + "+++method:" + request.getMethod());
+		if (!(handler instanceof HandlerMethod)) {
 			return true;
 		}
+		HandlerMethod handlerMethod = (HandlerMethod) handler;
 		Method method = handlerMethod.getMethod();
 		boolean isLogin = this.isLogin(method);
 		if (!isLogin){
@@ -72,15 +76,5 @@ public class MyInterceptor implements HandlerInterceptor{
 			return methodLogined.isLogined();
 		}
 		return false;
-	}
-
-	@Override
-	public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-		//System.out.println("post");
-	}
-
-	@Override
-	public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
-		//System.out.println("after");
 	}
 }

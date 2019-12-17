@@ -6,8 +6,8 @@ package com.springbootredis.model.enums;
  * @Description:
  */
 public interface BaseCodeEnum {
-     public String getCode();
+     String getCode();
 
-     public String getCaption();
+     String getCaption();
 
 }

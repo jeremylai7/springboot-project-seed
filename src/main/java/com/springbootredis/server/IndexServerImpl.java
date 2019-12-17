@@ -9,10 +9,8 @@ import com.springbootredis.model.UserQuery;
 import com.springbootredis.model.enums.UserType;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
 import org.springframework.stereotype.Service;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisShardInfo;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
@@ -28,6 +26,7 @@ public class IndexServerImpl extends BaseServiceImpl<User> implements IndexServe
         Example example = new Example(User.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("username",username);
+
         List<User> list = userDao.selectByExample(example);
         if (list.size() > 0){
             //用户名存在
@@ -106,14 +105,19 @@ public class IndexServerImpl extends BaseServiceImpl<User> implements IndexServe
     }
 
     public static void main(String[] args) {
-        JedisShardInfo jedisShardInfo = new JedisShardInfo("47.98.202.133",6379,10000);
+
+
+
+
+
+        /*JedisShardInfo jedisShardInfo = new JedisShardInfo("47.98.202.133",6379,10000);
         jedisShardInfo.setPassword("1234561");
         Jedis jedis = new Jedis(jedisShardInfo);
         jedis.connect();
         jedis.set("name","jeremy");
         System.out.println(jedis.get("name"));
         //jedis.connect();
-        jedis.close();
+        jedis.close();*/
 
 
     }

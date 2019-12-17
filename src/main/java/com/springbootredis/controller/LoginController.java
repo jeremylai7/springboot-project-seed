@@ -57,6 +57,7 @@ public class LoginController {
         String ip = NetUtil.getIpAddress(request);
         map.put("ip",ip);
         map.put("user", JSONObject.toJSONString(user));
+        map.put("loginTime", System.currentTimeMillis());
         String token = JwtUtil.generateToken(map);
         response.setHeader("Authorization",token);
         redisService.put(token,user.getId(),60*60);

@@ -19,29 +19,8 @@ import java.lang.reflect.Method;
 @Configuration
 @EnableCaching
 public class RedisConfig extends CachingConfigurerSupport{
-	@Bean
-	public KeyGenerator keyGenerator(){
-		return new KeyGenerator() {
-			@Override
-			public Object generate(Object o, Method method, Object... objects) {
-				StringBuilder sb = new StringBuilder();
-				sb.append(o.getClass().getName());
-				sb.append(method.getName());
-				for (Object obj:objects){
-					sb.append(obj.toString());
-				}
-				return sb.toString();
-			}
-		};
-	}
 
-	@Bean
-	public CacheManager cacheManager(RedisTemplate redisTemplate){
-		RedisCacheManager rcm = new RedisCacheManager(redisTemplate);
-		return rcm;
-	}
-
-	@Bean
+	/*@Bean
 	public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory) {
 		StringRedisTemplate template = new StringRedisTemplate(factory);
 		Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
@@ -52,7 +31,7 @@ public class RedisConfig extends CachingConfigurerSupport{
 		template.setValueSerializer(jackson2JsonRedisSerializer);
 		template.afterPropertiesSet();
 		return template;
-	}
+	}*/
 
 
 }

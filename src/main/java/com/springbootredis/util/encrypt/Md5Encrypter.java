@@ -4,7 +4,9 @@ package com.springbootredis.util.encrypt;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +20,7 @@ import java.io.Reader;
  */
 public class Md5Encrypter {
 
-    private static Logger logger = Logger.getLogger(Md5Encrypter.class);
+    private static Logger logger = LoggerFactory.getLogger(Md5Encrypter.class);
 
     public static String encrypt32(Object source){
         byte[] data;

@@ -2,7 +2,7 @@ spring:
   profiles:
     active: @profileActive@
 server:
-  port: 8080
+  port: 8088
 ---
 #开发环境
 spring:
@@ -11,18 +11,24 @@ spring:
     database: 1
     host: localhost
     port: 6379
-    pool:
-      max-active: 8
-      max-wait: -1
-      max-idle: 8
-      min-idle: 0
-    timeout: 0
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+    timeout: 3000
     password: 1234561
   datasource:
     url: jdbc:mysql://47.98.202.133:3306/blog?useSSL=false&characterEncoding=UTF-8
     username: root
     password: 123456
     driver-class-name: com.mysql.jdbc.Driver
+    druid:
+      stat-view-servlet:
+        login-username: admin
+        login-password: admin
+
 ---
 #生产环境
 spring:
@@ -31,18 +37,23 @@ spring:
     database: 1
     host: 47.98.202.133
     port: 6379
-    pool:
-      max-active: 8
-      max-wait: -1
-      max-idle: 8
-      min-idle: 0
-    timeout: 0
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+    timeout: 3000
     password: 1234561
   datasource:
     url: jdbc:mysql://47.98.202.133:3306/blog?useSSL=false&characterEncoding=UTF-8
     username: root
     password: 1234561
     driver-class-name: com.mysql.jdbc.Driver
+    druid:
+      stat-view-servlet:
+        login-username: admin
+        login-password: admin
 ---
 #公共部门
 weixin:
