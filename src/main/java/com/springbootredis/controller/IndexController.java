@@ -6,6 +6,7 @@ import com.springbootredis.model.User;
 import com.springbootredis.model.UserQuery;
 import com.springbootredis.server.IndexServer;
 import com.springbootredis.util.OutUtil;
+import com.springbootredis.util.encrypt.Md5Encrypter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -32,7 +33,7 @@ public class IndexController {
     @PostMapping("/add")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "username",value = "用户名",paramType = "query",required = true),
-            @ApiImplicitParam(name = "password",value = "密码",paramType = "query",required = true)
+            @ApiImplicitParam(name = "password",value = "密码 md5加密密码",paramType = "query",required = true)
     })
     public Result add(String username,String password) throws BusinessException {
 	    indexServer.add(username,password);

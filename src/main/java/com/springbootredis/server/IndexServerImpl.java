@@ -10,7 +10,6 @@ import com.springbootredis.model.enums.UserType;
 import com.springbootredis.util.encrypt.Md5xEncrypter;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
-import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 

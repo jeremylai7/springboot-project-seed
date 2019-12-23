@@ -5,6 +5,7 @@ import com.springbootredis.model.enums.UserType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.annotation.ColumnType;
 
 import javax.persistence.*;

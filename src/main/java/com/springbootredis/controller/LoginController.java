@@ -43,7 +43,7 @@ public class LoginController {
     @Autowired
     private RedisService redisService;
 
-    @ApiOperation(value = "登陆")
+    @ApiOperation(value = "登陆",response = User.class)
     @ApiImplicitParams({
             @ApiImplicitParam(value = "用户名",name = "username",required = true,paramType = "form"),
             @ApiImplicitParam(value = "密码",name ="password",required = true,paramType = "form")

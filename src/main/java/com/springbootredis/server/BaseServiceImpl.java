@@ -1,6 +1,5 @@
 package com.springbootredis.server;
 
-import com.springbootredis.util.MyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -11,7 +10,7 @@ import java.util.List;
  * @Date: 2019/1/6 15:00
  * @Description:
  */
-public class BaseServiceImpl<T> implements BaseService<T> {
+public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
     @Autowired
     private Mapper<T> mapper;
