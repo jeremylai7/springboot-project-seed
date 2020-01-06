@@ -1,4 +1,5 @@
 package com.springbootredis.server;
+import com.github.pagehelper.PageInfo;
 import com.springbootredis.exception.BusinessException;
 import com.springbootredis.model.User;
 import com.springbootredis.model.UserQuery;
@@ -34,7 +35,7 @@ public interface IndexServer extends BaseService<User>{
      * @param query
      * @return
      */
-    List<User> find(UserQuery query);
+    PageInfo<User> find(UserQuery query);
 
     /**
      * 分页查询 整合redis

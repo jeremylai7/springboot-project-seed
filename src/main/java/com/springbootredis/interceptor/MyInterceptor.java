@@ -48,10 +48,10 @@ public class MyInterceptor extends HandlerInterceptorAdapter{
 		Map<String,Object> params = JwtUtil.validate(authorization,ip);
 		User user = JSONObject.parseObject(params.get("user").toString(),User.class);
 		ProjectUtil.setUser(request,user);
-		Integer userId = Integer.valueOf(redisService.get(authorization).toString());
 		if (redisService.get(authorization) == null){
 			throw new BusinessException(ResponseCodes.TOKENOVERDUE);
 		}
+		Integer userId = Integer.valueOf(redisService.get(authorization).toString());
 		if (!userId.equals(user.getId())){
 			throw new BusinessException(ResponseCodes.TOKENOVERDUE);
 		}

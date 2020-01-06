@@ -1,6 +1,7 @@
 package com.springbootredis.server;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.springbootredis.dao.UserDao;
 import com.springbootredis.exception.BusinessException;
 import com.springbootredis.exception.ResponseCodes;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -72,14 +75,16 @@ public class IndexServerImpl extends BaseServiceImpl<User> implements IndexServe
     }
 
     @Override
-    public List<User> find(UserQuery query) {
+    public PageInfo<User> find(UserQuery query) {
         int count = userDao.selectCount(null);
         if (count > 0){
             PageHelper.startPage(query.getPageNo(),query.getPageSize());
-            return userDao.selectAll();
+            List<User> list = userDao.selectAll();
+            return new PageInfo<>(list);
         }
         return null;
     }
+
 
     @Override
     //@Cacheable(value = "indexUser")//每次都会生成的key都是不同的，所以每次都会生成新的缓存
@@ -107,7 +112,9 @@ public class IndexServerImpl extends BaseServiceImpl<User> implements IndexServe
     }
 
     public static void main(String[] args) {
-
+        List<String> lis1 = new ArrayList<>();
+        List<Integer> list2 = new LinkedList<>();
+        System.out.println(11);
 
 
 

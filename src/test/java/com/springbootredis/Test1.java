@@ -1,6 +1,7 @@
 package com.springbootredis;
 
 import javafx.scene.media.SubtitleTrack;
+import org.junit.Test;
 
 import java.util.*;
 
@@ -59,5 +60,31 @@ public class Test1 {
 
         return reverseString(s-1) - reverseString(s-2);
     }
+
+    @Test
+    public void array(){
+        /*int[] a = {3, 6, 1, 0};
+        int maxNum = -1;
+        int secNum = -1;
+        int maxIndex = -1;
+        for (int i = 0; i <a.length ; i++) {
+            //找出最大的数
+            if (a[i] > maxNum){
+                maxNum = a[i];
+                maxIndex = i;
+            }else if (a[i] > secNum){
+                secNum = a[i];
+            }
+        }
+        System.out.println(maxNum+" "+secNum);*/
+        int[] array = new int[10];
+        System.out.println(array);
+
+
+
+
+
+    }
+
 
 }
