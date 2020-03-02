@@ -1,13 +1,20 @@
 package com.springbootredis.controller;
 
 import com.springbootredis.model.Result;
+import com.springbootredis.model.ValidateModel;
+import com.springbootredis.util.OutUtil;
 import io.swagger.annotations.Api;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
  * @Author: laizc
@@ -15,6 +22,7 @@ import javax.servlet.http.HttpSession;
  */
 @Api(value = "其他示例api",description = "其他示例api desc")
 @RestController
+@Validated
 @RequestMapping("/example")
 public class ExampleController {
     @GetMapping("/index")
@@ -25,4 +33,18 @@ public class ExampleController {
 
         return null;
     }
+
+    @GetMapping("/vali2")
+    public Result validate(@Validated @ModelAttribute ValidateModel validateModel){
+        System.out.println(validateModel.getUsername());
+        return OutUtil.success(null);
+    }
+
+    @GetMapping("/vali3")
+    public Result vali3(@NotNull @NotEmpty @ModelAttribute String username){
+        return OutUtil.success(null);
+    }
+
+
+
 }
