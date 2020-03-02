@@ -5,6 +5,7 @@ import com.springbootredis.exception.BusinessException;
 import com.springbootredis.exception.ResponseCodes;
 import com.springbootredis.model.Result;
 import com.springbootredis.model.User;
+import com.springbootredis.model.UserQuery;
 import com.springbootredis.redis.RedisService;
 import com.springbootredis.server.UserService;
 import com.springbootredis.util.JwtUtil;
@@ -16,10 +17,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,5 +60,13 @@ public class LoginController {
         response.setHeader("Authorization",token);
         redisService.put(token,user.getId(),60*60);
         return OutUtil.success(user);
+    }
+
+    @ApiOperation(value = "test")
+    @GetMapping("/test")
+    public Result test(@RequestParam(value = "aaa") String username){
+        System.out.println(username);
+        System.out.println(1111111);
+        return OutUtil.success(null);
     }
 }
