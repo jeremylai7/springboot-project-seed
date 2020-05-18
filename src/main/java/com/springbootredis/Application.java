@@ -3,6 +3,7 @@ package com.springbootredis;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -24,6 +25,7 @@ import static com.google.common.collect.Lists.newArrayList;
 @SpringBootApplication
 @EnableSwagger2
 @MapperScan("com.springbootredis.dao")
+@ServletComponentScan("com.springbootredis.filter")
 public class Application {
 
 	public static void main(String[] args) {
