@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -36,6 +35,15 @@ public class ExampleController {
     }
 
     @ApiOperation(value = "字段验证测试")
+    @GetMapping("/index2")
+    public Result index2(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        System.out.println(session.getId());
+        System.out.println(session.isNew());
+
+        return null;
+    }
+
     @GetMapping("/vali2")
     public Result validate(@Validated @ModelAttribute ValidateModel validateModel){
         System.out.println(validateModel.getUsername());
