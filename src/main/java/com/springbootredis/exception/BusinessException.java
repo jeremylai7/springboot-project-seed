@@ -1,6 +1,7 @@
 package com.springbootredis.exception;
 
 import java.text.MessageFormat;
+import java.util.Random;
 
 /**
  * @Author: laizc
@@ -32,4 +33,5 @@ public class BusinessException extends Exception {
         }
         return MessageFormat.format(message,args);
     }
+
 }
