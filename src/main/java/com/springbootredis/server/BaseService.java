@@ -1,5 +1,8 @@
 package com.springbootredis.server;
 
+import com.github.pagehelper.PageInfo;
+import com.springbootredis.model.UserQuery;
+
 import java.util.List;
 
 /**
@@ -14,6 +17,13 @@ public interface BaseService<T> {
      * @return 返回所有数据
      */
     List<T> findAll();
+
+    /**
+     * 分页查询
+     * @param userQuery
+     * @return
+     */
+    PageInfo<T> find(UserQuery userQuery);
 
     /**
      * 添加

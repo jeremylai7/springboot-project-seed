@@ -31,13 +31,6 @@ public interface IndexServer extends BaseService<User>{
 
 
     /**
-     * 分页查询
-     * @param query
-     * @return
-     */
-    PageInfo<User> find(UserQuery query);
-
-    /**
      * 分页查询 整合redis
      * @param query
      * @return

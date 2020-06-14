@@ -21,14 +21,14 @@ import java.util.List;
 
 @Service
 public class IndexServerImpl extends BaseServiceImpl<User> implements IndexServer {
-    @Resource
-    private UserDao userDao;
+    //@Resource
+    //private UserDao userDao;
 
     private static Md5xEncrypter md5xEncrypter = new Md5xEncrypter(8);
 
     @Override
     public void add(String username,String password) throws BusinessException {
-        User oldUser = new User();
+        /*User oldUser = new User();
         oldUser.setUsername(username);
         int count = selectCount(oldUser);
         //用户名存在
@@ -45,12 +45,12 @@ public class IndexServerImpl extends BaseServiceImpl<User> implements IndexServe
         User newUser = new User();
         newUser.setPassword(md5xEncrypter.encryptByMd5Source(password,user.getId()));
         newUser.setId(user.getId());
-        userDao.updateByPrimaryKeySelective(newUser);
+        userDao.updateByPrimaryKeySelective(newUser);*/
     }
 
     @Override
     public void updateAll(User user) throws BusinessException {
-        Example example = new Example(User.class);
+        /*Example example = new Example(User.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("username",user.getUsername());
         criteria.andNotEqualTo("id",user.getId());
@@ -58,12 +58,12 @@ public class IndexServerImpl extends BaseServiceImpl<User> implements IndexServe
         if (list.size() > 0){
             throw new BusinessException(ResponseCodes.USERNAME_EXISTING);
         }
-        userDao.updateByPrimaryKey(user);
+        userDao.updateByPrimaryKey(user);*/
     }
 
     @Override
     public void update(User user) throws BusinessException {
-        Example example = new Example(User.class);
+        /*Example example = new Example(User.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("username",user.getUsername());
         criteria.andNotEqualTo("id",user.getId());
@@ -71,20 +71,8 @@ public class IndexServerImpl extends BaseServiceImpl<User> implements IndexServe
         if (list.size() > 0){
             throw new BusinessException(ResponseCodes.USERNAME_EXISTING);
         }
-        userDao.updateByPrimaryKeySelective(user);
+        userDao.updateByPrimaryKeySelective(user);*/
     }
-
-    @Override
-    public PageInfo<User> find(UserQuery query) {
-        int count = userDao.selectCount(null);
-        if (count > 0){
-            PageHelper.startPage(query.getPageNo(),query.getPageSize());
-            List<User> list = userDao.selectAll();
-            return new PageInfo<>(list);
-        }
-        return null;
-    }
-
 
     @Override
     //@Cacheable(value = "indexUser")//每次都会生成的key都是不同的，所以每次都会生成新的缓存
@@ -94,12 +82,12 @@ public class IndexServerImpl extends BaseServiceImpl<User> implements IndexServe
     //@Cacheable(value = "indexUser",key = "#p0.pageSize+''",condition = "#p0.pageSize > 2")
     @CachePut(value = "indexUser",key = "'user'",condition = "#p0.pageSize > 2")
     public List<User> findRedis(UserQuery query) {
-        System.out.println("--------------执行了--------------");
+        /*System.out.println("--------------执行了--------------");
         int count = userDao.selectCount(null);
         if (count > 0){
             PageHelper.startPage(query.getPageNo(),query.getPageSize());
             return userDao.selectAll();
-        }
+        }*/
         return null;
 
     }
@@ -115,9 +103,6 @@ public class IndexServerImpl extends BaseServiceImpl<User> implements IndexServe
         List<String> lis1 = new ArrayList<>();
         List<Integer> list2 = new LinkedList<>();
         System.out.println(11);
-
-
-
 
         /*JedisShardInfo jedisShardInfo = new JedisShardInfo("47.98.202.133",6379,10000);
         jedisShardInfo.setPassword("1234561");

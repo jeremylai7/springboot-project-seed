@@ -67,9 +67,13 @@ pagehelper:
   reasonable: true
   support-methods-arguments: true
   params: countSql
-mapper:
-  mappers: com.springbootredis.util.MyMapper
-  not-empty: false
-  identity: MYSQL
-  enum-as-simple-type: true
+#mapper:
+#  mappers: com.springbootredis.util.MyMapper
+#  not-empty: true
+
+#mapper:
+#  mappers: com.springbootredis.util.MyMapper
+#  not-empty: false
+#  identity: MYSQL
+#  enum-as-simple-type: true
 

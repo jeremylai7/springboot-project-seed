@@ -24,7 +24,7 @@ import static com.google.common.collect.Lists.newArrayList;
 
 @SpringBootApplication
 @EnableSwagger2
-@MapperScan("com.springbootredis.dao")
+@MapperScan(basePackages = "com.springbootredis.dao")
 @ServletComponentScan("com.springbootredis.filter")
 public class Application {
 

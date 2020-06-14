@@ -1,8 +1,11 @@
 package com.springbootredis.server;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import tk.mybatis.mapper.common.Mapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.springbootredis.model.UserQuery;
+import com.springbootredis.util.MyMapper;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**   通用service
@@ -10,14 +13,25 @@ import java.util.List;
  * @Date: 2019/1/6 15:00
  * @Description:
  */
-public abstract class BaseServiceImpl<T> implements BaseService<T> {
+public class BaseServiceImpl<T> implements BaseService<T> {
 
-    @Autowired
-    private Mapper<T> mapper;
+    @Resource
+    private MyMapper<T> mapper;
 
     @Override
     public List<T> findAll() {
         return mapper.selectAll();
+    }
+
+    @Override
+    public PageInfo<T> find(UserQuery query) {
+        int count = mapper.selectCount(null);
+        if (count > 0){
+            PageHelper.startPage(query.getPageNo(),query.getPageSize());
+            List<T> list = mapper.selectAll();
+            return new PageInfo<>(list);
+        }
+        return null;
     }
 
     @Override
