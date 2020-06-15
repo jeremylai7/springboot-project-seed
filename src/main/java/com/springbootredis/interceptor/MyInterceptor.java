@@ -10,6 +10,7 @@ import com.springbootredis.redis.RedisService;
 import com.springbootredis.util.JwtUtil;
 import com.springbootredis.util.NetUtil;
 import com.springbootredis.util.ProjectUtil;
+import com.springbootredis.util.SpringContextUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,9 +54,14 @@ public class MyInterceptor extends HandlerInterceptorAdapter{
 		User user = JSONObject.parseObject(params.get("user").toString(),User.class);
 		ProjectUtil.setUser(request,user);
 		BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
+		//第一种方法
 		if (redisService == null){
 			redisService = (RedisService) factory.getBean("redisServiceImpl");
 		}
+		//第二种方法
+		/*if (redisService == null){
+			redisService = (RedisService) SpringContextUtil.getBean("redisServiceImpl");
+		}*/
 		if (redisService.get(authorization) == null){
 			throw new BusinessException(ResponseCodes.TOKENOVERDUE);
 		}
