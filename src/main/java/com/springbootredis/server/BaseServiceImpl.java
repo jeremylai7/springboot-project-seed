@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.springbootredis.model.UserQuery;
 import com.springbootredis.util.MyMapper;
+import tk.mybatis.mapper.common.Mapper;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
 public class BaseServiceImpl<T> implements BaseService<T> {
 
     @Resource
-    private MyMapper<T> mapper;
+    private Mapper<T> mapper;
 
     @Override
     public List<T> findAll() {

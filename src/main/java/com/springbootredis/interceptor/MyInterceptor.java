@@ -12,8 +12,10 @@ import com.springbootredis.util.NetUtil;
 import com.springbootredis.util.ProjectUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,9 +26,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-@Component
+
 public class MyInterceptor extends HandlerInterceptorAdapter{
-	@Autowired
+
 	private RedisService redisService;
 
 	@Override
@@ -48,6 +50,10 @@ public class MyInterceptor extends HandlerInterceptorAdapter{
 		Map<String,Object> params = JwtUtil.validate(authorization,ip);
 		User user = JSONObject.parseObject(params.get("user").toString(),User.class);
 		ProjectUtil.setUser(request,user);
+		BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
+		if (redisService == null){
+			redisService = (RedisService) factory.getBean("redisServiceImpl");
+		}
 		if (redisService.get(authorization) == null){
 			throw new BusinessException(ResponseCodes.TOKENOVERDUE);
 		}

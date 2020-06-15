@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-//@Logined
+@Logined
 @Api(value = "首页api",description = "首页api desc")
 @RestController
 @RequestMapping("/index")

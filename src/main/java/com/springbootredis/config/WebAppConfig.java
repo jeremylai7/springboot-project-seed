@@ -12,13 +12,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
  */
 @SpringBootConfiguration
 public class WebAppConfig extends WebMvcConfigurationSupport {
-	@Autowired
-	private MyInterceptor myInterceptor;
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		//注册自定义拦截器
-		registry.addInterceptor(myInterceptor).addPathPatterns("/**")
+		registry.addInterceptor(new MyInterceptor()).addPathPatterns("/**")
 				.excludePathPatterns("/user/login");
 	}
 
