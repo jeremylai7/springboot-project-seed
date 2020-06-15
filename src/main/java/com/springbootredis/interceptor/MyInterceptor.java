@@ -10,6 +10,7 @@ import com.springbootredis.redis.RedisService;
 import com.springbootredis.util.JwtUtil;
 import com.springbootredis.util.NetUtil;
 import com.springbootredis.util.ProjectUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanFactory;
@@ -26,14 +27,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-
+@Slf4j
 public class MyInterceptor extends HandlerInterceptorAdapter{
 
 	private RedisService redisService;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		System.out.println("==================================>" + request.getServletPath() + "+++method:" + request.getMethod());
+		log.info("==================================>{},+++method:{}",request.getServletPath(),request.getMethod());
+		//System.out.println("==================================>" + request.getServletPath() + "+++method:" + request.getMethod());
 		if (!(handler instanceof HandlerMethod)) {
 			return true;
 		}
