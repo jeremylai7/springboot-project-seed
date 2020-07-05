@@ -36,6 +36,7 @@ public class Application {
 	public Docket createRestApi(){
 		return new Docket(DocumentationType.SWAGGER_2)
 				.apiInfo(apiInfo())
+				.directModelSubstitute(Byte.class,Integer.class)
 				.select()
 				.apis(RequestHandlerSelectors.basePackage("com"))
 				.build()
