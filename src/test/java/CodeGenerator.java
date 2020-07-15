@@ -71,17 +71,17 @@ public class CodeGenerator {
 		jdbcConnectionConfiguration.setDriverClass(JDBC_DIVER_CLASS_NAME);
 		context.setJdbcConnectionConfiguration(jdbcConnectionConfiguration);
 
-		PluginConfiguration pluginConfiguration = new PluginConfiguration();
+		/*PluginConfiguration pluginConfiguration = new PluginConfiguration();
 		pluginConfiguration.setConfigurationType("tk.mybatis.mapper.generator.MapperPlugin");
 		pluginConfiguration.addProperty("mappers",MAPPER_INTERFACE_REFERENCE);
-		context.addPluginConfiguration(pluginConfiguration);
+		context.addPluginConfiguration(pluginConfiguration);*/
 
 		JavaModelGeneratorConfiguration javaModelGeneratorConfiguration = new JavaModelGeneratorConfiguration();
 		javaModelGeneratorConfiguration.setTargetProject(PROJECT_PATH + JAVA_PATH);
 		javaModelGeneratorConfiguration.setTargetPackage(MODEL_PACKAGE);
 		context.setJavaModelGeneratorConfiguration(javaModelGeneratorConfiguration);
 
-		SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration = new SqlMapGeneratorConfiguration();
+		/*SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration = new SqlMapGeneratorConfiguration();
 		sqlMapGeneratorConfiguration.setTargetProject(PROJECT_PATH + RESOURCES_PATH);
 		sqlMapGeneratorConfiguration.setTargetPackage("mapper");
 		context.setSqlMapGeneratorConfiguration(sqlMapGeneratorConfiguration);
@@ -90,14 +90,18 @@ public class CodeGenerator {
 		javaClientGeneratorConfiguration.setTargetProject(PROJECT_PATH + JAVA_PATH);
 		javaClientGeneratorConfiguration.setTargetPackage(MAPPER_PACKAGE);
 		javaClientGeneratorConfiguration.setConfigurationType("XMLMAPPER");
-		context.setJavaClientGeneratorConfiguration(javaClientGeneratorConfiguration);
+		context.setJavaClientGeneratorConfiguration(javaClientGeneratorConfiguration);*/
 
 		TableConfiguration tableConfiguration = new TableConfiguration(context);
 		tableConfiguration.setTableName(tableName);
-		if (StringUtils.isNotBlank(modelName)){
-			tableConfiguration.setDomainObjectName(modelName);
+
+		if (StringUtils.isBlank(modelName)){
+			modelName = tableName.replace("t_","");
+		}else {
+
 		}
-		tableConfiguration.setGeneratedKey(new GeneratedKey("id","Mysql",true,null));
+		tableConfiguration.setDomainObjectName(modelName);
+		//tableConfiguration.setGeneratedKey(new GeneratedKey("id","Mysql",true,null));
 		context.addTableConfiguration(tableConfiguration);
 		MyBatisGenerator generator;
 		List<String> warnings;
@@ -115,7 +119,7 @@ public class CodeGenerator {
 			throw new RuntimeException("生成Model和Mapper失败",e);
 		}
 		if (generator.getGeneratedJavaFiles().isEmpty() || generator.getGeneratedXmlFiles().isEmpty()){
-			throw new RuntimeException("生成Model和Mapper失败:"+warnings);
+			//throw new RuntimeException("生成Model和Mapper失败:"+warnings);
 		}
 		if (StringUtils.isEmpty(modelName)){
 			//modelName = tableNameConvertUpperCamel(tableName);

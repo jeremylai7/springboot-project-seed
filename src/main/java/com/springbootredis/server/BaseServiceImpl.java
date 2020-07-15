@@ -17,7 +17,7 @@ import java.util.List;
 public class BaseServiceImpl<T> implements BaseService<T> {
 
     @Resource
-    private Mapper<T> mapper;
+    private MyMapper<T> mapper;
 
     @Override
     public List<T> findAll() {
@@ -57,6 +57,8 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 
     @Override
     public T selectOne(T t) {
-        return mapper.selectOne(t);
+        return null;
+        //return mapper.selectOne(t);
+
     }
 }
