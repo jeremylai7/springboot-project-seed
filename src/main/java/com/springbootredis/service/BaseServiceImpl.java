@@ -1,10 +1,9 @@
-package com.springbootredis.server;
+package com.springbootredis.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.springbootredis.model.UserQuery;
 import com.springbootredis.util.MyMapper;
-import tk.mybatis.mapper.common.Mapper;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -56,9 +55,12 @@ public class BaseServiceImpl<T> implements BaseService<T> {
     }
 
     @Override
-    public T selectOne(T t) {
-        return null;
-        //return mapper.selectOne(t);
+    public T findById(Integer id) {
+        return mapper.selectByPrimaryKey(id);
+    }
 
+    @Override
+	public T selectOne(T t){
+    	return mapper.selectOne(t);
     }
 }

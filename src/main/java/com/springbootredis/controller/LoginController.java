@@ -1,17 +1,9 @@
 package com.springbootredis.controller;
 
-import com.alibaba.fastjson.JSONObject;
-import com.springbootredis.exception.BusinessException;
-import com.springbootredis.exception.ResponseCodes;
 import com.springbootredis.model.Result;
-import com.springbootredis.model.User;
-import com.springbootredis.model.UserQuery;
 import com.springbootredis.redis.RedisService;
-import com.springbootredis.server.UserService;
-import com.springbootredis.util.JwtUtil;
-import com.springbootredis.util.NetUtil;
+import com.springbootredis.service.UserService;
 import com.springbootredis.util.OutUtil;
-import com.springbootredis.util.encrypt.Md5xEncrypter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -22,8 +14,6 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @Auther: laizc
@@ -41,7 +31,7 @@ public class LoginController {
     @Autowired
     private RedisService redisService;
 
-    @ApiOperation(value = "登陆",response = User.class)
+    @ApiOperation(value = "登陆")
     @ApiImplicitParams({
             @ApiImplicitParam(value = "用户名",name = "username",required = true,paramType = "form"),
             @ApiImplicitParam(value = "密码",name ="password",required = true,paramType = "form")
@@ -49,7 +39,7 @@ public class LoginController {
     @PostMapping("/login")
     public Result login(@ApiIgnore HttpServletRequest request,@ApiIgnore HttpServletResponse response,String username,
                         String password) throws Exception {
-        User user = userService.login(username,password);
+        /*User user = userService.login(username,password);
         //传入token参数
         Map<String,Object> map = new HashMap<>();
         String ip = NetUtil.getIpAddress(request);
@@ -58,8 +48,8 @@ public class LoginController {
         map.put("loginTime", System.currentTimeMillis());
         String token = JwtUtil.generateToken(map);
         response.setHeader("Authorization",token);
-        redisService.put(token,user.getId(),60*60);
-        return OutUtil.success(user);
+        redisService.put(token,user.getId(),60*60);*/
+        return OutUtil.success(null);
     }
 
     @ApiOperation(value = "test")

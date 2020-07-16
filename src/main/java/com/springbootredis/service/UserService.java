@@ -1,4 +1,4 @@
-package com.springbootredis.server;
+package com.springbootredis.service;
 
 import com.springbootredis.exception.BusinessException;
 import com.springbootredis.model.User;

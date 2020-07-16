@@ -1,10 +1,8 @@
 package com.springbootredis;
 
 import com.springbootredis.exception.BusinessException;
-import com.springbootredis.model.User;
 import com.springbootredis.redis.RedisService;
-import com.springbootredis.server.IndexServer;
-import com.springbootredis.util.OutUtil;
+import com.springbootredis.service.IndexServer;
 import com.springbootredis.util.encrypt.Md5Encrypter;
 import org.junit.Test;
 import org.junit.runner.RunWith;

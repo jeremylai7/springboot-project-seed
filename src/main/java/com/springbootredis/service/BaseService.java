@@ -1,4 +1,4 @@
-package com.springbootredis.server;
+package com.springbootredis.service;
 
 import com.github.pagehelper.PageInfo;
 import com.springbootredis.model.UserQuery;
@@ -61,8 +61,10 @@ public interface BaseService<T> {
 
     /**
      * 查询单个数据
-     * @param t   实体
+     * @param id   主键
      * @return
      */
-    T selectOne(T t);
+    T findById(Integer id);
+
+	T selectOne(T t);
 }

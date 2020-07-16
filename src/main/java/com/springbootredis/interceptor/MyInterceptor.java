@@ -10,17 +10,10 @@ import com.springbootredis.redis.RedisService;
 import com.springbootredis.util.JwtUtil;
 import com.springbootredis.util.NetUtil;
 import com.springbootredis.util.ProjectUtil;
-import com.springbootredis.util.SpringContextUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -54,7 +47,7 @@ public class MyInterceptor extends HandlerInterceptorAdapter{
 		User user = JSONObject.parseObject(params.get("user").toString(),User.class);
 		ProjectUtil.setUser(request,user);
 		BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
-		//第一种方法
+		//获取bean第一种方法
 		if (redisService == null){
 			redisService = (RedisService) factory.getBean("redisServiceImpl");
 		}

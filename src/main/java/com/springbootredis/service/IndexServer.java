@@ -1,5 +1,4 @@
-package com.springbootredis.server;
-import com.github.pagehelper.PageInfo;
+package com.springbootredis.service;
 import com.springbootredis.exception.BusinessException;
 import com.springbootredis.model.User;
 import com.springbootredis.model.UserQuery;

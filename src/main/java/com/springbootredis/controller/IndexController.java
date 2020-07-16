@@ -1,12 +1,11 @@
 package com.springbootredis.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.springbootredis.annotation.Logined;
 import com.springbootredis.exception.BusinessException;
 import com.springbootredis.model.Result;
 import com.springbootredis.model.User;
 import com.springbootredis.model.UserQuery;
-import com.springbootredis.server.IndexServer;
+import com.springbootredis.service.IndexServer;
 import com.springbootredis.util.OutUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
