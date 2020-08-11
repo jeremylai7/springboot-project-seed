@@ -6,7 +6,15 @@
 	<groupId>com</groupId>
 	<artifactId>springbootredis</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <modules>
+        <module>demo-admin</module>
+		<module>demo-common</module>
+		<module>demo-config</module>
+		<module>demo-data</module>
+		<module>demo-service</module>
+		<module>demo-web-core</module>
+	</modules>
+    <packaging>pom</packaging>
 
 	<name>springbootredis</name>
 	<description>Demo project for Spring Boot</description>
@@ -58,6 +66,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
+			<version>1.18.4</version>
 		</dependency>
 		<!--mybatis-->
 		<dependency>
