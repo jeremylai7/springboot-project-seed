@@ -3,7 +3,6 @@ package generator;
 import com.google.common.base.CaseFormat;
 import freemarker.template.TemplateExceptionHandler;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.*;
 import org.mybatis.generator.internal.DefaultShellCallback;
@@ -59,7 +58,7 @@ public class CodeGenerator {
 	}
 
 	public static void genCodeByCustomModeName(String tableName,String modelName){
-		if (StringUtils.isBlank(modelName)){
+		if (modelName == null){
 			modelName = tableNameConvertModel(tableName);
 		}
 		//genModelAndMapper(tableName,modelName);
@@ -113,7 +112,7 @@ public class CodeGenerator {
 
 		TableConfiguration tableConfiguration = new TableConfiguration(context);
 		tableConfiguration.setTableName(tableName);
-		if (StringUtils.isBlank(modelName)){
+		if (modelName == null){
 			modelName = tableNameConvertModel(tableName);
 		}
 		tableConfiguration.setDomainObjectName(modelName);

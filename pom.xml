@@ -4,9 +4,10 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com</groupId>
-	<artifactId>springbootredis</artifactId>
+	<artifactId>demo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-    <modules>
+	<packaging>pom</packaging>
+	<modules>
         <module>demo-admin</module>
 		<module>demo-common</module>
 		<module>demo-config</module>
@@ -14,10 +15,7 @@
 		<module>demo-service</module>
 		<module>demo-web-core</module>
 	</modules>
-    <packaging>pom</packaging>
-
-	<name>springbootredis</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Demo project</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -31,11 +29,12 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 	</properties>
-
+	<dependencyManagement>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<version>2.1.2.RELEASE</version>
 		</dependency>
 
 		<!--redis-->
@@ -58,10 +57,10 @@
 		</dependency>
 		<!--mysql-->
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<scope>runtime</scope>
-		</dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.15</version>
+        </dependency>
 		<!--lombok-->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -105,11 +104,6 @@
 			<artifactId>springfox-swagger2</artifactId>
 			<version>2.6.1</version>
 		</dependency>
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-			<version>2.6.1</version>
-		</dependency>
 		<!--guava-->
 		<dependency>
 			<groupId>com.google.guava</groupId>
@@ -132,6 +126,7 @@
 			<artifactId>commons-codec</artifactId>
 			<version>1.10</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -141,7 +136,7 @@
 		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
-			<scope>test</scope>
+			<version>2.3.23</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mybatis.generator</groupId>
@@ -149,7 +144,13 @@
 			<version>1.3.5</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>6.0.14.Final</version>
+		</dependency>
 	</dependencies>
+	</dependencyManagement>
 
 	<build>
 		<finalName>springboot-redis</finalName>

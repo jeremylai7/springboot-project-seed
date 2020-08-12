@@ -7,7 +7,7 @@ package generator;
  */
 public class ProjectConstant {
 	//生成代码所在的基础包名称，
-	public static final String BASE_PACKAGE = "com.springbootredis";
+	public static final String BASE_PACKAGE = "com.jeremy";
 
 	//生成的Model所在包
 	public static final String MODEL_PACKAGE = BASE_PACKAGE + ".model";
