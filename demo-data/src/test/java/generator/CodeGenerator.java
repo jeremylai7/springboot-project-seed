@@ -1,11 +1,14 @@
 package generator;
 
+import ch.qos.logback.core.rolling.helper.RenameUtil;
 import com.google.common.base.CaseFormat;
 import freemarker.template.TemplateExceptionHandler;
+import generator.plugin.RenameSqlMapperPlugin;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.*;
 import org.mybatis.generator.internal.DefaultShellCallback;
+import org.mybatis.generator.plugins.RenameExampleClassPlugin;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -48,25 +51,23 @@ public class CodeGenerator {
 
 	public static void main(String[] args) {
 		//可以使用多个数据表配置，或者单个数据表配置genCodeByCustomModeName
-		genCode("t_aa");
+		genCodeByCustomModeName("t_aa",null,null);
 	}
 
-	public static void genCode(String... tableNames){
-		for(String tableName : tableNames){
-			genCodeByCustomModeName(tableName,null);
-		}
-	}
-
-	public static void genCodeByCustomModeName(String tableName,String modelName){
+	public static void genCodeByCustomModeName(String tableName,String modelName,String packageName){
 		if (modelName == null){
 			modelName = tableNameConvertModel(tableName);
 		}
-		//genModelAndMapper(tableName,modelName);
+		if (packageName == null){
+			packageName = modelName.toLowerCase();
+		}
+		genModelAndMapper(tableName,modelName,packageName);
 		//genService(modelName);
-		genController(modelName);
+		//genController(modelName);
 	}
 
-	public static void genModelAndMapper(String tableName,String modelName){
+	public static void genModelAndMapper(String tableName,String modelName,String packageName){
+		String projectName = "/demo-data";
 		Context context = new Context(ModelType.FLAT);
 		context.setId("Jeremy");
 		//不生成example相关内容
@@ -85,28 +86,36 @@ public class CodeGenerator {
 		pluginConfiguration.addProperty("mappers",MAPPER_INTERFACE_REFERENCE);
 		context.addPluginConfiguration(pluginConfiguration);
 
+		RenameSqlMapperPlugin renameSqlMapperPlugin = new RenameSqlMapperPlugin();
+		Properties properties = new Properties();
+		properties.setProperty("searchString","Mapper");
+		properties.setProperty("replaceString","Dao");
+		renameSqlMapperPlugin.setProperties(properties);
+		context.addPluginConfiguration(renameSqlMapperPlugin);
+
 		//todo 不生成注释
 		/*CommentGeneratorConfiguration commentGeneratorConfiguration = new CommentGeneratorConfiguration();
 		commentGeneratorConfiguration.addProperty("suppressDate","true");
 		commentGeneratorConfiguration.addProperty("suppressAllComments","true");
 		context.setCommentGeneratorConfiguration(commentGeneratorConfiguration);*/
 
+		String targetProject = PROJECT_PATH + projectName + JAVA_PATH;
 		//model
 		JavaModelGeneratorConfiguration javaModelGeneratorConfiguration = new JavaModelGeneratorConfiguration();
-		javaModelGeneratorConfiguration.setTargetProject(PROJECT_PATH + JAVA_PATH);
-		javaModelGeneratorConfiguration.setTargetPackage(MODEL_PACKAGE);
+		javaModelGeneratorConfiguration.setTargetProject(targetProject);
+		javaModelGeneratorConfiguration.setTargetPackage(MODEL_PACKAGE.replace("${modelName}",packageName));
 		context.setJavaModelGeneratorConfiguration(javaModelGeneratorConfiguration);
 
 		//mapper
 		SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration = new SqlMapGeneratorConfiguration();
-		sqlMapGeneratorConfiguration.setTargetProject(PROJECT_PATH + RESOURCES_PATH);
+		sqlMapGeneratorConfiguration.setTargetProject(targetProject);
 		sqlMapGeneratorConfiguration.setTargetPackage("mapper");
 		context.setSqlMapGeneratorConfiguration(sqlMapGeneratorConfiguration);
 
 		//dao
 		JavaClientGeneratorConfiguration javaClientGeneratorConfiguration = new JavaClientGeneratorConfiguration();
-		javaClientGeneratorConfiguration.setTargetProject(PROJECT_PATH + JAVA_PATH);
-		javaClientGeneratorConfiguration.setTargetPackage(MAPPER_PACKAGE);
+		javaClientGeneratorConfiguration.setTargetProject(targetProject);
+		javaClientGeneratorConfiguration.setTargetPackage(MAPPER_PACKAGE.replace("${modelName}",packageName));
 		javaClientGeneratorConfiguration.setConfigurationType("XMLMAPPER");
 		context.setJavaClientGeneratorConfiguration(javaClientGeneratorConfiguration);
 
