@@ -59,7 +59,7 @@
 		<dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.15</version>
+            <version>8.0.16</version>
         </dependency>
 		<!--lombok-->
 		<dependency>
@@ -97,7 +97,6 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.7</version>
 		</dependency>
-
 		<!--swagger-->
 		<dependency>
 			<groupId>io.springfox</groupId>
@@ -105,11 +104,11 @@
 			<version>2.6.1</version>
 		</dependency>
 		<!--guava-->
-		<dependency>
+		<!--<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>18.0</version>
-		</dependency>
+			<version>24.1.1</version>
+		</dependency>-->
 		<!--druid-->
 		<dependency>
 			<groupId>com.alibaba</groupId>
@@ -147,7 +146,7 @@
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>6.0.14.Final</version>
+			<version>6.1.0.Final</version>
 		</dependency>
 	</dependencies>
 	</dependencyManagement>
