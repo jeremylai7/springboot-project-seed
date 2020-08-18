@@ -1,6 +1,5 @@
 package generator;
 
-import ch.qos.logback.core.rolling.helper.RenameUtil;
 import com.google.common.base.CaseFormat;
 import freemarker.template.TemplateExceptionHandler;
 import generator.plugin.RenameSqlMapperPlugin;
@@ -8,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.*;
 import org.mybatis.generator.internal.DefaultShellCallback;
-import org.mybatis.generator.plugins.RenameExampleClassPlugin;
 
 import java.io.File;
 import java.io.FileWriter;
