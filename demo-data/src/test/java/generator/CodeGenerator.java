@@ -91,7 +91,8 @@ public class CodeGenerator {
 		properties.setProperty("searchString","Mapper");
 		properties.setProperty("replaceString","Dao");
 		renameSqlMapperPlugin.setProperties(properties);
-		context.addPluginConfiguration(renameSqlMapperPlugin);
+		//context.addPluginConfiguration(renameSqlMapperPlugin);
+
 
 		//todo 不生成注释
 		/*CommentGeneratorConfiguration commentGeneratorConfiguration = new CommentGeneratorConfiguration();
