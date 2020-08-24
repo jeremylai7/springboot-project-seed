@@ -5,12 +5,9 @@ import ${basePackage}.data.${packageName}.model.${modelNameUpperCamel};
 import ${basePackage}.service.${packageName}.${modelNameUpperCamel}Service;
 import ${basePackage}.data.query.PageQuery;
 import com.github.pagehelper.PageInfo;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 
 /**
 * Created by ${author} on ${date}.
@@ -19,7 +16,7 @@ import javax.annotation.Resource;
 @RequestMapping("${baseRequestMapping}")
 public class ${modelNameUpperCamel}Controller {
 
-    @Resource
+    @Autowired
     private ${modelNameUpperCamel}Service ${modelNameLowerCamel}Service;
 
     @PostMapping("/add")
@@ -40,13 +37,13 @@ public class ${modelNameUpperCamel}Controller {
         return OutUtil.success(null);
     }
 
-    @PostMapping("/detail")
+    @GetMapping("/detail")
     public Result detail(@RequestParam Integer id) {
         ${modelNameUpperCamel} ${modelNameLowerCamel} = ${modelNameLowerCamel}Service.findById(id);
          return OutUtil.success(${modelNameLowerCamel});
     }
 
-    @PostMapping("/list")
+    @GetMapping("/list")
     public Result list(PageQuery query) {
        PageInfo<${modelNameUpperCamel}> pageInfo = aaService.find(query);
        return OutUtil.success(pageInfo);

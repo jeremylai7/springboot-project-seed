@@ -4,18 +4,19 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jeremy.data.query.PageQuery;
 import com.jeremy.data.utils.MyMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;
 import java.util.List;
 
-/**   通用service
+/**  通用service
  * @Auther: laizc
  * @Date: 2019/1/6 15:00
  * @Description:
  */
 public class BaseServiceImpl<T> implements BaseService<T> {
 
-    @Resource
+    @Autowired
     private MyMapper<T> mapper;
 
     @Override
