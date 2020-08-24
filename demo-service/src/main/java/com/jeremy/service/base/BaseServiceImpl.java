@@ -2,7 +2,7 @@ package com.jeremy.service.base;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.jeremy.data.query.UserQuery;
+import com.jeremy.data.query.PageQuery;
 import com.jeremy.data.utils.MyMapper;
 
 import javax.annotation.Resource;
@@ -24,7 +24,13 @@ public class BaseServiceImpl<T> implements BaseService<T> {
     }
 
     @Override
-    public PageInfo<T> find(UserQuery query) {
+    public PageInfo<T> find(PageQuery query) {
+        if (query.getPageNo() == null){
+            query.setPageNo(1);
+        }
+        if (query.getPageSize() == null){
+            query.setPageSize(10);
+        }
         int count = mapper.selectCount(null);
         if (count > 0){
             PageHelper.startPage(query.getPageNo(),query.getPageSize());

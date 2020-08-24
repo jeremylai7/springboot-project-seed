@@ -1,7 +1,7 @@
 package com.jeremy.service.user;
 
 import com.jeremy.common.encrypt.Md5xEncrypter;
-import com.jeremy.data.query.UserQuery;
+import com.jeremy.data.query.PageQuery;
 import com.jeremy.data.user.dao.UserDao;
 import com.jeremy.data.user.model.User;
 import com.jeremy.service.base.BaseServiceImpl;
@@ -79,7 +79,7 @@ public class IndexServerImpl extends BaseServiceImpl<User> implements IndexServe
     //@Cacheable(value="indexUser", key="#p0.pageSize+''")
     //@Cacheable(value = "indexUser",key = "#p0.pageSize+''",condition = "#p0.pageSize > 2")
     @CachePut(value = "indexUser",key = "'user'",condition = "#p0.pageSize > 2")
-    public List<User> findRedis(UserQuery query) {
+    public List<User> findRedis(PageQuery query) {
         /*System.out.println("--------------执行了--------------");
         int count = userDao.selectCount(null);
         if (count > 0){

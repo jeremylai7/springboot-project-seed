@@ -1,7 +1,7 @@
 package com.jeremy.service.user;
 
 
-import com.jeremy.data.query.UserQuery;
+import com.jeremy.data.query.PageQuery;
 import com.jeremy.data.user.model.User;
 import com.jeremy.service.base.BaseService;
 import com.jeremy.service.exception.BusinessException;
@@ -37,7 +37,7 @@ public interface IndexServer extends BaseService<User> {
      * @param query
      * @return
      */
-    List<User> findRedis(UserQuery query);
+    List<User> findRedis(PageQuery query);
 
     /**
      * 清理缓存

@@ -1,7 +1,7 @@
 package com.jeremy.service.base;
 
 import com.github.pagehelper.PageInfo;
-import com.jeremy.data.query.UserQuery;
+import com.jeremy.data.query.PageQuery;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public interface BaseService<T> {
      * @param userQuery
      * @return
      */
-    PageInfo<T> find(UserQuery userQuery);
+    PageInfo<T> find(PageQuery userQuery);
 
     /**
      * 添加

@@ -20,7 +20,7 @@ public class ProjectConstant {
 
 
 	//生成的Controller所在包
-	public static final String CONTROLLER_PACKAGE = BASE_PACKAGE + ".controller";
+	public static final String CONTROLLER_PACKAGE = BASE_PACKAGE + ".admin.controller";
 
 	//Mapper插件基础接口的完全限定名
 	public static final String MAPPER_INTERFACE_REFERENCE = BASE_PACKAGE + ".data.utils.MyMapper";

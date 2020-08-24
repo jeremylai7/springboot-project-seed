@@ -36,7 +36,8 @@ public class CodeGenerator {
 
 	private static final String RESOURCES_PATH = "/src/main/resources";//资源文件路径
 
-	private static final String TEMPLATE_FILE_PATH = PROJECT_PATH + "/src/test/resource/generator/template";
+	private static final String TEMPLATE_FILE_PATH = PROJECT_PATH + "/demo-data/src/test/resources/template";
+
 
 	private static final String DATE = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
@@ -60,8 +61,8 @@ public class CodeGenerator {
 			packageName = modelName.toLowerCase();
 		}
 		genModelAndMapper(tableName,modelName,packageName);
-		//genService(modelName);
-		//genController(modelName);
+		genService(modelName,packageName);
+		genController(modelName,packageName);
 	}
 
 	public static void genModelAndMapper(String tableName,String modelName,String packageName){
@@ -84,6 +85,7 @@ public class CodeGenerator {
 		pluginConfiguration.addProperty("mappers",MAPPER_INTERFACE_REFERENCE);
 		context.addPluginConfiguration(pluginConfiguration);
 
+		//todo dao层重命名 暂时未解决
 		RenameSqlMapperPlugin renameSqlMapperPlugin = new RenameSqlMapperPlugin();
 		Properties properties = new Properties();
 		properties.setProperty("searchString","Mapper");
@@ -93,10 +95,10 @@ public class CodeGenerator {
 
 
 		//todo 不生成注释
-		/*CommentGeneratorConfiguration commentGeneratorConfiguration = new CommentGeneratorConfiguration();
+		CommentGeneratorConfiguration commentGeneratorConfiguration = new CommentGeneratorConfiguration();
 		commentGeneratorConfiguration.addProperty("suppressDate","true");
 		commentGeneratorConfiguration.addProperty("suppressAllComments","true");
-		context.setCommentGeneratorConfiguration(commentGeneratorConfiguration);*/
+		context.setCommentGeneratorConfiguration(commentGeneratorConfiguration);
 
 		String targetProject = PROJECT_PATH + projectName + JAVA_PATH;
 		//model
@@ -105,9 +107,10 @@ public class CodeGenerator {
 		javaModelGeneratorConfiguration.setTargetPackage(MODEL_PACKAGE.replace("${modelName}",packageName));
 		context.setJavaModelGeneratorConfiguration(javaModelGeneratorConfiguration);
 
+		String resourceProject = PROJECT_PATH + projectName + RESOURCES_PATH;
 		//mapper
 		SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration = new SqlMapGeneratorConfiguration();
-		sqlMapGeneratorConfiguration.setTargetProject(targetProject);
+		sqlMapGeneratorConfiguration.setTargetProject(resourceProject);
 		sqlMapGeneratorConfiguration.setTargetPackage("mapper");
 		context.setSqlMapGeneratorConfiguration(sqlMapGeneratorConfiguration);
 
@@ -149,7 +152,8 @@ public class CodeGenerator {
 		log.info(modelName + "Mapper.xml 生成成功");
 	}
 
-	public static void genService(String modelName){
+	public static void genService(String modelName,String packageName){
+		String projectName = "demo-service";
 		try {
 			freemarker.template.Configuration cfg = getConfiguration();
 			Map<String,Object> map = new HashMap<>();
@@ -157,18 +161,17 @@ public class CodeGenerator {
 			map.put("author",AUTHOR);
 			map.put("basePackage",BASE_PACKAGE);
 			map.put("modelNameUpperCamel",modelName);
-
 			map.put("modelNameLowerCamel",tableNameConvertLowerCamel(modelName));
-			File file = new File(PROJECT_PATH + JAVA_PATH + PACKAGE_PATH_SERVICE +
-					modelName + "Service.java");
+			map.put("packageName",packageName);
+			String packagePathService = PACKAGE_PATH_SERVICE.replace("${modelName}",packageName);
+			File file = new File(PROJECT_PATH + "/" + projectName + JAVA_PATH + packagePathService + modelName + "Service.java");
 			if (!file.getParentFile().exists()){
 				file.getParentFile().mkdirs();
 			}
 			cfg.getTemplate("service.ftl").process(map,new FileWriter(file));
 			System.out.println(modelName +"Service文件生成成功");
 
-			File fileImpl = new File(PROJECT_PATH + JAVA_PATH + PACKAGE_PATH_SERVICE +
-					modelName + "ServiceImpl.java");
+			File fileImpl = new File(PROJECT_PATH + "/" + projectName + JAVA_PATH + packagePathService + modelName + "ServiceImpl.java");
 			if (!fileImpl.getParentFile().exists()){
 				fileImpl.getParentFile().mkdirs();
 			}
@@ -180,7 +183,8 @@ public class CodeGenerator {
 		}
 	}
 
-	public static void genController(String modelName){
+	public static void genController(String modelName,String packageName){
+		String projectName = "demo-admin";
 		try {
 			freemarker.template.Configuration cfg = getConfiguration();
 			Map<String, Object> data = new HashMap<>();
@@ -190,8 +194,9 @@ public class CodeGenerator {
 			data.put("modelNameUpperCamel", modelName);
 			data.put("modelNameLowerCamel", CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, modelName));
 			data.put("basePackage", BASE_PACKAGE);
+			data.put("packageName",packageName);
 
-			File file = new File(PROJECT_PATH + JAVA_PATH + PACKAGE_PATH_CONTROLLER + modelName + "Controller.java");
+			File file = new File(PROJECT_PATH + "/" + projectName + JAVA_PATH + PACKAGE_PATH_CONTROLLER + modelName + "Controller.java");
 			if (!file.getParentFile().exists()) {
 				file.getParentFile().mkdirs();
 			}
