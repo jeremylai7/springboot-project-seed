@@ -91,6 +91,7 @@ public class CodeGenerator {
 		renameSqlMapperPlugin.setProperties(properties);
 		//context.addPluginConfiguration(renameSqlMapperPlugin);
 
+
 		//todo 不生成注释
 		/*CommentGeneratorConfiguration commentGeneratorConfiguration = new CommentGeneratorConfiguration();
 		commentGeneratorConfiguration.addProperty("suppressDate","true");
