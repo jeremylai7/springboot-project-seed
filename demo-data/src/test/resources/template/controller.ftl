@@ -45,7 +45,7 @@ public class ${modelNameUpperCamel}Controller {
 
     @GetMapping("/list")
     public Result list(PageQuery query) {
-       PageInfo<${modelNameUpperCamel}> pageInfo = aaService.find(query);
+       PageInfo<${modelNameUpperCamel}> pageInfo = ${modelNameLowerCamel}Service.find(query);
        return OutUtil.success(pageInfo);
     }
 }
