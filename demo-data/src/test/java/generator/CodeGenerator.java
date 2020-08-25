@@ -50,7 +50,7 @@ public class CodeGenerator {
 
 	public static void main(String[] args) {
 		//可以使用多个数据表配置，或者单个数据表配置genCodeByCustomModeName
-		genCodeByCustomModeName("t_aa",null,null);
+		genCodeByCustomModeName("t_user",null,null);
 	}
 
 	public static void genCodeByCustomModeName(String tableName,String modelName,String packageName){
@@ -219,7 +219,7 @@ public class CodeGenerator {
 	}
 
 	private static String tableNameConvertModel(String tableName){
-		return CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL,tableName.replace("t","").toLowerCase());
+		return CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL,tableName.replace("t_","").toLowerCase());
 	}
 
 	private static String tableNameConvertLowerCamel(String tableName) {
