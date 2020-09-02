@@ -36,6 +36,11 @@ public class IndexController {
     })
     public Result add(String username, String password) throws BusinessException {
 	    indexServer.add(username,password);
+		int begin = 78679;
+		int length = 1483647;
+		for (int i = begin; i < length; i++) {
+			indexServer.add("apple"+i, i+""+8839);
+		}
 	    return OutUtil.success(null);
 	}
 

@@ -3,9 +3,11 @@ package com.jeremy.service.user;
 import com.jeremy.common.encrypt.Md5xEncrypter;
 import com.jeremy.data.query.PageQuery;
 import com.jeremy.data.user.dao.UserDao;
+import com.jeremy.data.user.enums.UserType;
 import com.jeremy.data.user.model.User;
 import com.jeremy.service.base.BaseServiceImpl;
 import com.jeremy.service.exception.BusinessException;
+import com.jeremy.service.exception.ResponseCodes;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
@@ -26,7 +28,7 @@ public class IndexServerImpl extends BaseServiceImpl<User> implements IndexServe
 
     @Override
     public void add(String username,String password) throws BusinessException {
-        /*User oldUser = new User();
+        User oldUser = new User();
         oldUser.setUsername(username);
         int count = selectCount(oldUser);
         //用户名存在
@@ -43,7 +45,7 @@ public class IndexServerImpl extends BaseServiceImpl<User> implements IndexServe
         User newUser = new User();
         newUser.setPassword(md5xEncrypter.encryptByMd5Source(password,user.getId()));
         newUser.setId(user.getId());
-        userDao.updateByPrimaryKeySelective(newUser);*/
+        userDao.updateByPrimaryKeySelective(newUser);
     }
 
     @Override
