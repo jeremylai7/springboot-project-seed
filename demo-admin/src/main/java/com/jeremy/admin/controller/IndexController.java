@@ -30,14 +30,9 @@ public class IndexController {
 
 	@ApiOperation(value = "添加用户")
     @PostMapping("/add")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "username",value = "用户名",paramType = "query",required = true),
-            @ApiImplicitParam(name = "password",value = "密码 md5加密密码",paramType = "query",required = true)
-    })
-    public Result add(String username, String password) throws BusinessException {
-	    indexServer.add(username,password);
-		int begin = 78679;
-		int length = 1483647;
+	@ApiImplicitParam(name = "begin",value = "用户名",paramType = "query",required = true)
+    public Result add(Integer begin) throws BusinessException {
+	    int length = 1483647;
 		for (int i = begin; i < length; i++) {
 			indexServer.add("apple"+i, i+""+8839);
 		}

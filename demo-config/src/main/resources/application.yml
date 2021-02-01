@@ -24,11 +24,12 @@ spring:
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      max-lifetime: 0
     druid:
       stat-view-servlet:
         login-username: admin
         login-password: admin
-
 ---
 #生产环境
 spring:
@@ -50,6 +51,8 @@ spring:
     username: root
     password: 1234561
     driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      max-lifetime: 0
     druid:
       stat-view-servlet:
         login-username: admin
