@@ -42,6 +42,7 @@ public class MyInterceptor extends HandlerInterceptorAdapter{
 		String ip = NetUtil.getIpAddress(request);
 		response.setHeader("Content-Type", "application/json;charset=UTF-8");
 		response.setHeader("Authorization", authorization);
+		response.setCharacterEncoding("UTF-8");
 		Map<String,Object> params = JwtUtil.validate(authorization,ip);
 		User user = JSONObject.parseObject(params.get("user").toString(),User.class);
 		ProjectUtil.setUser(request,user);
