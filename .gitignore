@@ -23,3 +23,9 @@
 /dist/
 /nbdist/
 /.nb-gradle/
+/demo-admin/target/
+/demo-common/target/
+/demo-config/target/
+/demo-data/target/
+/demo-service/target/
+demo-web-core/target/
