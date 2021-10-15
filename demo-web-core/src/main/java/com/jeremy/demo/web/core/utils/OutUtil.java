@@ -14,6 +14,10 @@ public class OutUtil {
         return getResult(ResponseCodes.SUCCESS, data);
     }
 
+    public static Result success() {
+        return getResult(ResponseCodes.SUCCESS, null);
+    }
+
     public static Result error(String code, String message) {
         Result result = new Result();
         result.setCode(code);
