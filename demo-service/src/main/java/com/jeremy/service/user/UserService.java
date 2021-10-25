@@ -19,16 +19,5 @@ public interface UserService extends BaseService<User> {
      */
     User login(String username, String password) throws BusinessException;
 
-    /**
-     * 秒杀订单
-     * @param productId
-     */
-    void skill(String productId);
-
-    /**
-     * 查询订单
-     * @param productId
-     * @return
-     */
-    String query(String productId);
+    void add(String username,String password);
 }

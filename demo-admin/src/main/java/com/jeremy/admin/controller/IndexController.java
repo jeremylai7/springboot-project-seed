@@ -7,6 +7,7 @@ import com.jeremy.demo.web.core.utils.OutUtil;
 import com.jeremy.demo.web.core.view.Result;
 import com.jeremy.service.exception.BusinessException;
 import com.jeremy.service.user.IndexServer;
+import com.jeremy.service.user.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -18,6 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 //@Logined
 @Api(value = "首页api",description = "首页api desc")
@@ -28,14 +33,29 @@ public class IndexController {
 	@Autowired
 	private IndexServer indexServer;
 
+	@Autowired
+	private UserService userService;
+
 	@ApiOperation(value = "添加用户")
-    @PostMapping("/add")
+	@PostMapping("/add")
+	public Result add(String username,String password) {
+		userService.add(username,password);
+		return OutUtil.success();
+	}
+
+
+    @PostMapping("/add2")
 	@ApiImplicitParam(name = "begin",value = "用户名",paramType = "query",required = true)
-    public Result add(Integer begin) throws BusinessException {
+    public Result add2(Integer begin) throws BusinessException {
+		BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<>(1000);
+		ThreadPoolExecutor executor =new ThreadPoolExecutor(10,5000,1L, TimeUnit.MILLISECONDS,workQueue);
 	    int length = 1483647;
 		for (int i = begin; i < length; i++) {
 			indexServer.add("apple"+i, i+""+8839);
 		}
+
+
+
 	    return OutUtil.success(null);
 	}
 
