@@ -1,6 +1,7 @@
 package com.jeremy.admin.controller;
 
 import com.jeremy.data.user.model.User;
+import com.jeremy.service.exception.BusinessException;
 import com.jeremy.service.user.SecSkillService;
 import com.jeremy.service.user.UserService;
 import io.swagger.annotations.Api;
@@ -25,7 +26,7 @@ public class SecSkillController {
     private SecSkillService secSkillService;
 
 	@GetMapping("/skill")
-	public String skill(String productId) {
+	public String skill(String productId) throws BusinessException {
 		secSkillService.skill(productId);
 		return secSkillService.query(productId);
 	}
