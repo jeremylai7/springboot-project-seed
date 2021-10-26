@@ -43,7 +43,7 @@ public class RedisLock {
                 redisTemplate.opsForValue().getOperations().delete(key);
             }
         } catch (Exception e) {
-            log.error("【redis分布式锁解锁异常】  {}",e);
+            log.error("【redis分布式锁解锁异常】{}",e);
         }
 
     }
