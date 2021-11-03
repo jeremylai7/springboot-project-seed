@@ -42,7 +42,7 @@ public class SecSkillServiceImpl implements SecSkillService{
 	private RedisLock redisLock;
 
 	@Override
-	public synchronized void skill(String productId) throws BusinessException {
+	public void skill(String productId) throws BusinessException {
 		//加锁
 		long time = System.currentTimeMillis() + TIME_OUT;
 		if (!redisLock.lock(productId, String.valueOf(time))) {

@@ -45,7 +45,7 @@ spring:
         max-idle: 8
         min-idle: 0
     timeout: 3000
-    password: 1234561
+    password: 123456
   datasource:
     url: jdbc:mysql://47.98.202.133:3306/blog?useSSL=false&characterEncoding=UTF-8
     username: root
