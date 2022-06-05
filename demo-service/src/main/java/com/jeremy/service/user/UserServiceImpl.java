@@ -7,6 +7,7 @@ import com.jeremy.service.annotation.WriteTransactional;
 import com.jeremy.service.base.BaseServiceImpl;
 import com.jeremy.service.exception.BusinessException;
 import com.jeremy.service.exception.ResponseCodes;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -51,12 +52,33 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         user.setTop(false);
         user.setUserType(UserType.NORMAL);
         save(user);
-        add();
+
     }
 
-    private void add() {
-        int a = 1/0;
+    @Override
+    @WriteTransactional
+    public void test(String username) throws BusinessException {
+        User user = new User();
+        user.setRoleId("4");
+        user.setUsername(username);
+        user.setAge(29);
+        user.setTop(false);
+        user.setUserType(UserType.NORMAL);
+        save(user);
+        //if (username.startsWith("b")) {
+            try {
+                aaServer.add(username + "哈哈哈");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        //}
     }
+
+    @Autowired
+    private AaServer aaServer;
+
+
 
 
     public static void main(String[] args) {

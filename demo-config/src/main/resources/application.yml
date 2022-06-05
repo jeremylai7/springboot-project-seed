@@ -20,9 +20,9 @@ spring:
     timeout: 3000
     password: 1234561
   datasource:
-    url: jdbc:mysql://47.98.202.133:3306/blog?useSSL=false&characterEncoding=UTF-8
+    url: jdbc:mysql://sh-cynosdbmysql-grp-ar201mbc.sql.tencentcdb.com:21857/blog?useSSL=false&characterEncoding=UTF-8
     username: root
-    password: 123456
+    password: Lzc906159
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       max-lifetime: 0

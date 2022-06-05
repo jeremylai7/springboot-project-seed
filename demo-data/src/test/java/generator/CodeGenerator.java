@@ -25,18 +25,23 @@ import static generator.ProjectConstant.*;
 public class CodeGenerator {
 
 	//JDBC配置
-	private static final String JDBC_URL = "jdbc:mysql://47.98.202.133:3306/blog?zeroDateTimeBehavior=convertToNull&characterEncoding=UTF-8&serverTimezone=UTC";
+	private static final String JDBC_URL = "jdbc:mysql://sh-cynosdbmysql-grp-ar201mbc.sql.tencentcdb.com:21857/blog?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai";
 	private static final String JDBC_USERNAME = "root";
-	private static final String JDBC_PASSWORD = "1234561";
+	private static final String JDBC_PASSWORD = "xxxx";
 	private static final String JDBC_DIVER_CLASS_NAME = "com.mysql.cj.jdbc.Driver";
 
 	private static final String PROJECT_PATH = System.getProperty("user.dir");
 
-	private static final String JAVA_PATH = "/src/main/java"; //java文件路径
+	//java文件路径
+	private static final String JAVA_PATH = "/src/main/java";
 
-	private static final String RESOURCES_PATH = "/src/main/resources";//资源文件路径
+	//资源文件路径
+	private static final String RESOURCES_PATH = "/src/main/resources";
 
-	private static final String TEMPLATE_FILE_PATH = PROJECT_PATH + "/demo-data/src/test/resources/template";
+	//Date项目名称
+	private static final String DATE_PROJECT = "/demo-data";
+
+	private static final String TEMPLATE_FILE_PATH = PROJECT_PATH + DATE_PROJECT + "/src/test/resources/template";
 
 
 	private static final String DATE = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
@@ -66,7 +71,7 @@ public class CodeGenerator {
 	}
 
 	public static void genModelAndMapper(String tableName,String modelName,String packageName){
-		String projectName = "/demo-data";
+		String projectName = DATE_PROJECT;
 		Context context = new Context(ModelType.FLAT);
 		context.setId("Jeremy");
 		//不生成example相关内容
@@ -79,7 +84,7 @@ public class CodeGenerator {
 		jdbcConnectionConfiguration.setDriverClass(JDBC_DIVER_CLASS_NAME);
 		context.setJdbcConnectionConfiguration(jdbcConnectionConfiguration);
 
-		//dao继承通用mapper
+		//dao 继承通用mapper
 		PluginConfiguration pluginConfiguration = new PluginConfiguration();
 		pluginConfiguration.setConfigurationType("tk.mybatis.mapper.generator.MapperPlugin");
 		pluginConfiguration.addProperty("mappers",MAPPER_INTERFACE_REFERENCE);
@@ -94,7 +99,7 @@ public class CodeGenerator {
 		//context.addPluginConfiguration(renameSqlMapperPlugin);
 
 
-		//todo 不生成注释
+		//不生成注释
 		CommentGeneratorConfiguration commentGeneratorConfiguration = new CommentGeneratorConfiguration();
 		commentGeneratorConfiguration.addProperty("suppressDate","true");
 		commentGeneratorConfiguration.addProperty("suppressAllComments","true");

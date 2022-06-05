@@ -8,7 +8,6 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<modules>
-        <module>demo-admin</module>
 		<module>demo-common</module>
 		<module>demo-config</module>
 		<module>demo-data</module>

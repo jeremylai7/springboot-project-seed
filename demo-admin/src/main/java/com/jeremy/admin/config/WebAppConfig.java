@@ -1,6 +1,5 @@
 package com.jeremy.admin.config;
 
-import com.jeremy.admin.interceptor.MyInterceptor;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
@@ -20,8 +19,8 @@ public class WebAppConfig extends WebMvcConfigurationSupport {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		//注册自定义拦截器
-		registry.addInterceptor(new MyInterceptor()).addPathPatterns("/**")
-				.excludePathPatterns("/user/login");
+		//registry.addInterceptor(new MyInterceptor()).addPathPatterns("/**")
+			//	.excludePathPatterns("/user/login");
 	}
 
 	/**

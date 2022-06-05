@@ -20,4 +20,6 @@ public interface UserService extends BaseService<User> {
     User login(String username, String password) throws BusinessException;
 
     void add(String username,String password);
+
+    void test(String username) throws BusinessException;
 }
