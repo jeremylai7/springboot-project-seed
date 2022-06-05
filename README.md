@@ -36,7 +36,7 @@ VALUES
 1. 设置数据库配置：
 
 ```
-//JDBC配置
+        //JDBC配置
 	private static final String JDBC_URL = "jdbc:mysql://sh-cynosdbmysql-grp-ar201mbc.sql.tencentcdb.com:21857/blog";
 	private static final String JDBC_USERNAME = "root";
 	private static final String JDBC_PASSWORD = "xxxx";
