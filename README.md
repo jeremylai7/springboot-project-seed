@@ -8,7 +8,15 @@ springboot-project-seed是基于springboot和mybatis的种子项目，用于项�
 
 # 入门
 
-执行数据库：
+## 下载代码
+
+```
+git clone https://github.com/jeremylai7/springboot-project-seed.git
+```
+
+
+## 执行数据库：
+
 ```
 CREATE TABLE `t_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -29,7 +37,8 @@ VALUES
 	(11,X'38',X'3436343634',X'6665383935666332393839633366663061663134326236326433626533613864393861393233',25,0,X'SP')
 ```
 
-## 生成 dao、mapper、service、controller 文件
+## 生成文件
+
 
 找到demo-data项目下的[CodeGenerator](demo-data/src/test/java/generator/CodeGenerator.java),路径为 `demo-data/src/test/java/generator/CodeGenerator.java`。
 
@@ -48,10 +57,10 @@ VALUES
 比如添加 `holiday` 实体，表名是 `t_holiday`，`model` 名会自动去掉前面的 `t_`,所以 `model` 默认不写。
 
 ```
-  public static void main(String[] args) {
-		//可以使用多个数据表配置，或者单个数据表配置genCodeByCustomModeName
-		genCodeByCustomModeName("t_holiday",null,null);
-	}
+public static void main(String[] args) {
+	//可以使用多个数据表配置，或者单个数据表配置genCodeByCustomModeName
+	genCodeByCustomModeName("t_holiday",null,null);
+}
 ```
 
 3. 执行 main方法，控制台输出
@@ -63,6 +72,8 @@ HolidayService文件生成成功
 17:44:00.673 [main] INFO generator.CodeGenerator - HolidayServiceImpl文件生成成功
 HolidayController.java 生成成功
 ```
+
+## 文件生成结果
 
 `demo-data` 项目自动生成了 `dao`、`model` 以及 `mapper` 文件:
 
@@ -119,16 +130,5 @@ public class HolidayController {
  ```
  
  调用查询列表方法 `holiday/list` 就能查询数据列表了，其他方法也类同。实现一键配置 `curd` 方法。
-
-
-
-
-
-
-
-
-
-
-
 
 
