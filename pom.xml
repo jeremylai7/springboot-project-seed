@@ -138,9 +138,9 @@
 		</dependency>
 		<!--代码生成器依赖-->
 		<dependency>
-			<groupId>org.freemarker</groupId>
-			<artifactId>freemarker</artifactId>
-			<version>2.3.23</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-freemarker</artifactId>
+			<version>2.5.12</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mybatis.generator</groupId>

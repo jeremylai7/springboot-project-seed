@@ -1,88 +1,19 @@
 package com.jeremy.service.user;
 
-import com.jeremy.common.encrypt.Md5xEncrypter;
-import com.jeremy.data.user.enums.UserType;
 import com.jeremy.data.user.model.User;
-import com.jeremy.service.annotation.WriteTransactional;
+import com.jeremy.data.user.dao.UserMapper;
 import com.jeremy.service.base.BaseServiceImpl;
-import com.jeremy.service.exception.BusinessException;
-import com.jeremy.service.exception.ResponseCodes;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import javax.annotation.Resource;
 
 /**
- * @Auther: laizc
- * @Date: 2019/1/6 15:05
- * @Description:
+ * @Auther: Jeremy
+ * @Date: 2022-07-09
  */
 @Service
 public class UserServiceImpl extends BaseServiceImpl<User> implements UserService{
 
-    private static Md5xEncrypter md5xEncrypter = new Md5xEncrypter(8);
+       @Resource
+       private UserMapper userMapper;
 
-    @Override
-    public User login(String username, String password) throws BusinessException {
-        User oldUser =  new User();
-        oldUser.setUsername(username);
-        User user = selectOne(oldUser);
-        if (user == null){
-            throw new BusinessException(ResponseCodes.PASSWORD_ERROR);
-        }
-        String encryPassword = md5xEncrypter.encryptByMd5Source(password,user.getId());
-        if (!encryPassword.equals(user.getPassword())){
-            throw new BusinessException(ResponseCodes.PASSWORD_ERROR);
-        }
-        return user;
-    }
-
-
-    @Override
-    @WriteTransactional
-    public void add(String username, String password) {
-        User user = new User();
-        user.setRoleId("2");
-        user.setUsername(username);
-        user.setAge(18);
-        user.setTop(false);
-        user.setUserType(UserType.NORMAL);
-        save(user);
-
-    }
-
-    @Override
-    @WriteTransactional
-    public void test(String username) throws BusinessException {
-        User user = new User();
-        user.setRoleId("4");
-        user.setUsername(username);
-        user.setAge(29);
-        user.setTop(false);
-        user.setUserType(UserType.NORMAL);
-        save(user);
-        //if (username.startsWith("b")) {
-            try {
-                aaServer.add(username + "哈哈哈");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-        //}
-    }
-
-    @Autowired
-    private AaServer aaServer;
-
-
-
-
-    public static void main(String[] args) {
-        String encryPassword = md5xEncrypter.encryptByMd5Source("21232f297a57a5a743894a0e4a801fc3",4);
-        System.out.println(encryPassword);
-    }
 }
