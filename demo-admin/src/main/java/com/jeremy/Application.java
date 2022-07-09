@@ -3,8 +3,10 @@ package com.jeremy;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import tk.mybatis.spring.annotation.MapperScan;
 
 @SpringBootApplication
+@MapperScan("com.jeremy.data.**.dao")
 public class Application {
 
 	public static void main(String[] args) {
