@@ -48,13 +48,18 @@ public class ExampleController {
             Workbook workbook = WorkbookFactory.create(inputStream);
             // sheet 数量
             int sheetsNumber = workbook.getNumberOfSheets();
-            System.out.println(sheetsNumber);
+
             // 默认读取第一页
-            Sheet sheet = workbook.getSheetAt(1);
+            Sheet sheet = workbook.getSheetAt(0);
             Row row = null;
             Cell cell = null;
             int first = sheet.getFirstRowNum();
             int phy = sheet.getPhysicalNumberOfRows();
+            // 首行
+            for (int j = sheet.getRow(0).getFirstCellNum(); j < sheet.getRow(0).getLastCellNum(); j++) {
+                Object cellValue = getCellValue(sheet.getRow(0).getCell(j));
+                System.out.println(cellValue);
+            }
 
             for (int i = sheet.getFirstRowNum() + 1; i < sheet.getPhysicalNumberOfRows(); i++) {
                 row = sheet.getRow(i);
@@ -65,10 +70,6 @@ public class ExampleController {
 
                 }
             }
-
-
-
-
 
         } catch (InvalidFormatException e) {
             e.printStackTrace();
