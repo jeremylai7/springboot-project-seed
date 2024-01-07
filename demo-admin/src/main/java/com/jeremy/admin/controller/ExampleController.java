@@ -1,7 +1,10 @@
 package com.jeremy.admin.controller;
 
+import cn.hutool.poi.excel.ExcelReader;
+import cn.hutool.poi.excel.ExcelUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.poi.POIXMLDocumentPart;
 import org.apache.poi.hssf.usermodel.HSSFClientAnchor;
 import org.apache.poi.hssf.usermodel.HSSFPicture;
 import org.apache.poi.hssf.usermodel.HSSFShape;
@@ -9,6 +12,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.*;
+import org.openxmlformats.schemas.drawingml.x2006.spreadsheetDrawing.CTMarker;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,36 +50,27 @@ public class ExampleController {
         return demo;
     }
 
+    public static void main(String[] args) {
+        ExcelReader reader = ExcelUtil.getReader("test.xlsx");
+        Workbook workbook = reader.getWorkbook();
+        List<? extends PictureData> pictures = workbook.getAllPictures();
+        for (PictureData picture : pictures) {
+            byte[] data = picture.getData();
+            System.out.println(data);
+        }
+
+
+    }
+
     @ApiOperation(value = "import")
     @PostMapping("/importImage")
     public void importExcelImage(MultipartFile multipartFile) throws IOException, InvalidFormatException {
         InputStream inputStream = multipartFile.getInputStream();
         Workbook workbook = WorkbookFactory.create(inputStream);
-        Sheet sheet =  workbook.getSheetAt(0);
-
-        // 获取 Drawing 对象，用于处理图形
-        //Drawing<?> drawing = sheet.getDrawingPatriarch();
-
-        // 获取 Drawing 对象，用于处理图形
-        XSSFDrawing drawing = (XSSFDrawing) sheet.getDrawingPatriarch();
-
-        // 获取所有形状
-        List<XSSFShape> shapes = drawing.getShapes();
-        // 遍历所有形状，筛选出图片
-        for (XSSFShape shape : shapes) {
-            if (shape instanceof XSSFPicture) {
-                XSSFPicture picture = (XSSFPicture) shape;
-
-                // 获取图片的列和行索引
-                ClientAnchor anchor = picture.getClientAnchor();
-                int col1 = anchor.getCol1();
-                int row1 = anchor.getRow1();
-
-                // 获取图片数据
-                byte[] pictureData = picture.getPictureData().getData();
-                System.out.println(picture);
-            }
-        }
+        XSSFSheet sheet = (XSSFSheet) workbook.getSheetAt(0);
+        List<? extends PictureData> pictures = workbook.getAllPictures();
+        Map<String, PictureData> map = getPictures2(sheet);
+        System.out.println(map);
 
 
     }
@@ -94,6 +89,26 @@ public class ExampleController {
         }
         return map;
     }
+
+    public static Map<String, PictureData> getPictures2 (XSSFSheet sheet) throws IOException {
+        Map<String, PictureData> map = new HashMap<String, PictureData>();
+        List<POIXMLDocumentPart> list = sheet.getRelations();
+        for (POIXMLDocumentPart part : list) {
+            if (part instanceof XSSFDrawing) {
+                XSSFDrawing drawing = (XSSFDrawing) part;
+                List<XSSFShape> shapes = drawing.getShapes();
+                for (XSSFShape shape : shapes) {
+                    XSSFPicture picture = (XSSFPicture) shape;
+                    XSSFClientAnchor anchor = picture.getPreferredSize();
+                    CTMarker marker = anchor.getFrom();
+                    String key = marker.getRow() + "-" + marker.getCol();
+                    map.put(key, picture.getPictureData());
+                }
+            }
+        }
+        return map;
+    }
+
 
 
 
