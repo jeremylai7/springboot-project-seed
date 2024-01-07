@@ -2,8 +2,13 @@ package com.jeremy.admin.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.poi.hssf.usermodel.HSSFClientAnchor;
+import org.apache.poi.hssf.usermodel.HSSFPicture;
+import org.apache.poi.hssf.usermodel.HSSFShape;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,13 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
@@ -40,11 +47,63 @@ public class ExampleController {
     }
 
     @ApiOperation(value = "import")
+    @PostMapping("/importImage")
+    public void importExcelImage(MultipartFile multipartFile) throws IOException, InvalidFormatException {
+        InputStream inputStream = multipartFile.getInputStream();
+        Workbook workbook = WorkbookFactory.create(inputStream);
+        Sheet sheet =  workbook.getSheetAt(0);
+
+        // 获取 Drawing 对象，用于处理图形
+        //Drawing<?> drawing = sheet.getDrawingPatriarch();
+
+        // 获取 Drawing 对象，用于处理图形
+        XSSFDrawing drawing = (XSSFDrawing) sheet.getDrawingPatriarch();
+
+        // 获取所有形状
+        List<XSSFShape> shapes = drawing.getShapes();
+        // 遍历所有形状，筛选出图片
+        for (XSSFShape shape : shapes) {
+            if (shape instanceof XSSFPicture) {
+                XSSFPicture picture = (XSSFPicture) shape;
+
+                // 获取图片的列和行索引
+                ClientAnchor anchor = picture.getClientAnchor();
+                int col1 = anchor.getCol1();
+                int row1 = anchor.getRow1();
+
+                // 获取图片数据
+                byte[] pictureData = picture.getPictureData().getData();
+                System.out.println(picture);
+            }
+        }
+
+
+    }
+
+    public static Map<String, PictureData> getPictures1 (HSSFSheet sheet) throws IOException {
+        Map<String, PictureData> map = new HashMap<String, PictureData>();
+        List<HSSFShape> list = sheet.getDrawingPatriarch().getChildren();
+        for (HSSFShape shape : list) {
+            if (shape instanceof HSSFPicture) {
+                HSSFPicture picture = (HSSFPicture) shape;
+                HSSFClientAnchor cAnchor = (HSSFClientAnchor) picture.getAnchor();
+                PictureData pdata = picture.getPictureData();
+                String key = cAnchor.getRow1() + "-" + cAnchor.getCol1(); // 行号-列号
+                map.put(key, pdata);
+            }
+        }
+        return map;
+    }
+
+
+
+
+
+    @ApiOperation(value = "import")
     @PostMapping("/import")
-    public void importExcel(MultipartFile multipartFile) throws IOException {
+    public void importExcel(MultipartFile multipartFile) throws IOException, InvalidFormatException {
         InputStream inputStream = multipartFile.getInputStream();
 
-        try {
             Workbook workbook = WorkbookFactory.create(inputStream);
             // sheet 数量
             int sheetsNumber = workbook.getNumberOfSheets();
@@ -71,9 +130,7 @@ public class ExampleController {
                 }
             }
 
-        } catch (InvalidFormatException e) {
-            e.printStackTrace();
-        }
+
 
 
     }
