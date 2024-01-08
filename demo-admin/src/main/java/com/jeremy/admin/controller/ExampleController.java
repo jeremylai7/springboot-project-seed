@@ -105,7 +105,8 @@ public class ExampleController {
                     XSSFClientAnchor anchor = picture.getPreferredSize();
                     CTMarker marker = anchor.getFrom();
                     String key = marker.getRow() + "-" + marker.getCol();
-                    PictureData xssfPictureData = picture.getPictureData();
+                    PictureData pictureData = picture.getPictureData();
+                    pictureData.getPictureType();
 
                     map.put(key, picture.getPictureData());
                 }
