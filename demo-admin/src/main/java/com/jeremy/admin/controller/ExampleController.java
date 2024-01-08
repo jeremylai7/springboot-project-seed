@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -68,9 +69,11 @@ public class ExampleController {
         InputStream inputStream = multipartFile.getInputStream();
         Workbook workbook = WorkbookFactory.create(inputStream);
         XSSFSheet sheet = (XSSFSheet) workbook.getSheetAt(0);
-        List<? extends PictureData> pictures = workbook.getAllPictures();
+        //List<? extends PictureData> pictures = workbook.getAllPictures();
         Map<String, PictureData> map = getPictures2(sheet);
         System.out.println(map);
+        printImg(map);
+
 
 
     }
@@ -102,11 +105,34 @@ public class ExampleController {
                     XSSFClientAnchor anchor = picture.getPreferredSize();
                     CTMarker marker = anchor.getFrom();
                     String key = marker.getRow() + "-" + marker.getCol();
+                    PictureData xssfPictureData = picture.getPictureData();
+
                     map.put(key, picture.getPictureData());
                 }
             }
         }
         return map;
+    }
+
+    //图片写出
+    public static void printImg(Map<String, PictureData> sheetList) throws IOException {
+
+        Object key[] = sheetList.keySet().toArray();
+        for (int i = 0; i < sheetList.size(); i++) {
+            // 获取图片流
+            PictureData pic = sheetList.get(key[i]);
+            // 获取图片索引
+            String picName = key[i].toString();
+            // 获取图片格式
+            String ext = pic.suggestFileExtension();
+
+            byte[] data = pic.getData();
+
+            //图片保存路径
+            FileOutputStream out = new FileOutputStream("D:\\img\\pic" + picName + "." + ext);
+            out.write(data);
+            out.close();
+        }
     }
 
 

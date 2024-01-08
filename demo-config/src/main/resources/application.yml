@@ -7,6 +7,10 @@ server:
 #开发环境
 spring:
   profiles: dev
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
   redis:
     database: 1
     host: localhost
@@ -70,5 +74,7 @@ pagehelper:
   reasonable: true
   support-methods-arguments: true
   params: countSql
+
+
 
 
