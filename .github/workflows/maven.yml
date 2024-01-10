@@ -24,4 +24,4 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     - name: List build artifacts
-      run: ls -R target  
+      run: ls -R demo-admin  
