@@ -2,8 +2,6 @@ package com.jeremy.admin.controller;
 
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.apache.poi.POIXMLDocumentPart;
 import org.apache.poi.hssf.usermodel.HSSFClientAnchor;
 import org.apache.poi.hssf.usermodel.HSSFPicture;
@@ -37,12 +35,10 @@ import java.util.regex.Pattern;
  * @date: created in 2022/5/16
  * @desc:
  **/
-@Api(tags = "示例")
 @RestController
 @RequestMapping("/example")
 public class ExampleController {
 
-    @ApiOperation(value = "index")
     @GetMapping("/index")
     public Object index(HttpServletRequest request){
         Demo demo = new Demo();
@@ -63,7 +59,6 @@ public class ExampleController {
 
     }
 
-    @ApiOperation(value = "import")
     @PostMapping("/importImage")
     public void importExcelImage(MultipartFile multipartFile) throws IOException, InvalidFormatException {
         InputStream inputStream = multipartFile.getInputStream();
@@ -141,7 +136,7 @@ public class ExampleController {
 
 
 
-    @ApiOperation(value = "import")
+    //@ApiOperation(value = "import")
     @PostMapping("/import")
     public void importExcel(MultipartFile multipartFile) throws IOException, InvalidFormatException {
         InputStream inputStream = multipartFile.getInputStream();
