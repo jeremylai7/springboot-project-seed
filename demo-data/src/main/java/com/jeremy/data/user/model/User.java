@@ -1,10 +1,13 @@
 package com.jeremy.data.user.model;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 
 @Table(name = "t_user")
 public class User {
     @Id
+    @ApiModelProperty(value = "gagag")
     private Integer id;
 
     /**

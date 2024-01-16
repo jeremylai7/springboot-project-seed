@@ -2,6 +2,8 @@ package com.jeremy.admin.controller;
 
 import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.poi.POIXMLDocumentPart;
 import org.apache.poi.hssf.usermodel.HSSFClientAnchor;
 import org.apache.poi.hssf.usermodel.HSSFPicture;
@@ -35,11 +37,13 @@ import java.util.regex.Pattern;
  * @date: created in 2022/5/16
  * @desc:
  **/
+@Api(value = "积分兑换记录 前端控制器",tags = "积分兑换记录 前端控制器API")
 @RestController
 @RequestMapping("/example")
 public class ExampleController {
 
     @GetMapping("/index")
+    @ApiOperation(value = "商城 积分兑换")
     public Object index(HttpServletRequest request){
         Demo demo = new Demo();
         demo.setCreateTime(new Date());

@@ -7,10 +7,10 @@ import io.swagger.annotations.ApiModelProperty;
  * @Date: Created in 15:11 2019-06-25
  */
 public class PageQuery {
-    @ApiModelProperty(value = "每页大小")
+    //@ApiModelProperty(value = "每页大小")
     private Integer pageSize = 10;
 
-    @ApiModelProperty(value = "页码")
+    //@ApiModelProperty(value = "页码")
     private Integer pageNo = 1;
 
     public Integer getPageSize() {
