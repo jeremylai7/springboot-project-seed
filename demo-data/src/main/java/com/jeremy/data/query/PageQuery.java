@@ -13,6 +13,9 @@ public class PageQuery {
     //@ApiModelProperty(value = "页码")
     private Integer pageNo = 1;
 
+    @ApiModelProperty(value = "每页大小")
+    private Integer aa;
+
     public Integer getPageSize() {
         return pageSize;
     }

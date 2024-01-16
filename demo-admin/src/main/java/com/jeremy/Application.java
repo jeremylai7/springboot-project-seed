@@ -20,6 +20,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static com.google.common.collect.Lists.newArrayList;
+
 @SpringBootApplication
 @EnableSwagger2
 @MapperScan("com.jeremy.data.**.dao")
@@ -30,52 +32,46 @@ public class Application {
 	}
 
 	@Bean
-	public Docket buildDocket() {
-		List<Parameter> list = Arrays.asList(
-				new ParameterBuilder()
-						.name("test")
-						.defaultValue("test")
-						.description("访问令牌")
-						.modelRef(new ModelRef("string"))
-						.parameterType("header")
-						.build()
-		);
+	public Docket createRestApi() {
 		return new Docket(DocumentationType.SWAGGER_2)
-				.apiInfo(buildApiInfo()).globalOperationParameters(list).select()
+				.apiInfo(apiInfo())
+				//修正byte转string的bug
+				.directModelSubstitute(Byte.class, Integer.class)
+				.select()
 				.apis(RequestHandlerSelectors.basePackage("com"))
 				.paths(PathSelectors.any())
-				.build()
-				.securityContexts( Collections.singletonList(buildSecurityContexts()))
-				.securitySchemes(Collections.singletonList(buildSecuritySchemes()));
+				.build().securitySchemes(securitySchemes())
+				.securityContexts(securityContexts());
+
 	}
 
-	private SecurityScheme buildSecuritySchemes() {
-		return new ApiKey("test", "test", "header");
+	private ApiInfo apiInfo() {
+		return new ApiInfoBuilder().title("用油网3.0工作台API")
+				.description("")
+				.termsOfServiceUrl("")
+				.version("3.0.0").build();
 	}
 
-	private SecurityContext buildSecurityContexts() {
-		return SecurityContext.builder()
-				.securityReferences(Collections.singletonList(new SecurityReference("Authorization", scopes())))
-				.forPaths(PathSelectors.any())
-				.build();
+	private List<ApiKey> securitySchemes() {
+		return newArrayList(
+				new ApiKey("Authorization", "Authorization", "header"));
 	}
 
-	/**
-	 * 允许认证的scope
-	 */
-	private AuthorizationScope[] scopes() {
-		AuthorizationScope authorizationScope = new AuthorizationScope("all", "接口测试");
+	private List<SecurityContext> securityContexts() {
+		return newArrayList(
+				SecurityContext.builder()
+						.securityReferences(defaultAuth())
+						.forPaths(PathSelectors.regex("^(?!auth).*$"))
+						.build()
+		);
+	}
+
+	List<SecurityReference> defaultAuth() {
+		AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
 		AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
 		authorizationScopes[0] = authorizationScope;
-		return authorizationScopes;
-	}
-
-	private ApiInfo buildApiInfo() {
-		return new ApiInfoBuilder()
-				.title("swagger2Properties.getTitle()")
-				.description("swagger2Properties.getDescription()")
-				.version("swagger2Properties.getVersion()")
-				.build();
+		return newArrayList(
+				new SecurityReference("Authorization", authorizationScopes));
 	}
 
 }
